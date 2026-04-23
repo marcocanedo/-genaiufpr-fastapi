@@ -45,20 +45,6 @@ python identificador_idioma/run.py \
   --top 3
 ```
 
-## Testes
-
-Para rodar a suíte de testes sem configurar `PYTHONPATH` manualmente:
-
-```bash
-python identificador_idioma/teste.py
-```
-
-Se preferir usar `unittest` diretamente:
-
-```bash
-PYTHONPATH=identificador_idioma/src python -m unittest discover -s identificador_idioma/tests -v
-```
-
 Exemplo de saída esperada:
 
 ```text
@@ -81,8 +67,3 @@ O projeto atende aos requisitos do enunciado:
 - comparação com perfis de múltiplos idiomas usando distância euclidiana
 - identificação do idioma mais provável com exibição do grau de similaridade
 - documentação de execução e exemplos de uso
-
-Validação realizada:
-
-- `32` testes automatizados passando
-- execução ponta a ponta da CLI com URL real
