@@ -1,0 +1,253 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+*{box-sizing:border-box}
+.pg{padding:1.4rem .5rem 1rem;font-family:'Ubuntu', sans-serif;background:#0d1b24;border-radius:12px;--term-font:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace}
+.pg-h{text-align:center;margin-bottom:1.4rem}
+.pg-h h1{font-size:24px;font-weight:500;color:#29AA9F;margin:0 0 4px;letter-spacing:.01em}
+.pg-h p{font-size:15px;color:#6a8a9a;margin:0}
+.g5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin-bottom:1rem}
+.sc{border:.5px solid rgba(41,170,159,.2);border-radius:8px;padding:10px 9px 8px;cursor:pointer;transition:border-color .17s,background .17s,transform .13s;background:#102030;position:relative;overflow:hidden}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--ac);opacity:.5;transition:opacity .17s}
+.sc:hover{border-color:rgba(41,170,159,.5);transform:translateY(-1px)}
+.sc:hover::before,.sc.on::before{opacity:1}
+.sc.on{border-color:#29AA9F;background:#152c3a}
+.sn{font-size:12px;font-weight:500;color:var(--ac);margin-bottom:4px;display:block;letter-spacing:.08em;font-family:var(--font-mono)}
+.st{font-size:15px;font-weight:500;color:#ECF0F1;margin:0 0 2px;line-height:1.3}
+.ss{font-size:13px;color:#6a8a9a;line-height:1.4;margin:0}
+.sd{border:.5px solid rgba(41,170,159,.2);border-radius:10px;background:#102030;padding:1rem 1.2rem;margin-bottom:1rem;display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;align-items:start;min-height:200px}
+.sdh{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+.sdm{width:3px;height:30px;border-radius:2px;background:var(--ac,#29AA9F);flex-shrink:0}
+.sdt{font-size:18px;font-weight:500;color:#ECF0F1;margin:0}
+.sdtag{font-size:13px;color:#6a8a9a;margin:0}
+.sdd{font-size:15px;color:#b0c8d4;line-height:1.65;margin-bottom:8px}
+.sdac{font-size:11px;color:#6a8a9a;line-height:1.55;margin-bottom:7px;padding:7px 9px;background:rgba(133,193,233,.07);border-radius:6px;border-left:2px solid rgba(133,193,233,.3);display:flex;flex-direction:column;gap:8px}
+.sdac strong{color:#85C1E9;font-weight:500}
+.sdri{padding-top:8px;border-top:.5px solid rgba(133,193,233,.16)}
+.sdri:first-of-type{padding-top:0;border-top:none}
+.sdcite{font-size:11.5px;color:#b0c8d4;line-height:1.6}
+.sdcite a{color:#b0c8d4;text-decoration:none}
+.sdcite a:hover{color:#ECF0F1}
+.sdrx{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.sdrb{display:inline-flex;align-items:center;background:rgba(133,193,233,.1);border:.5px solid rgba(133,193,233,.28);border-radius:4px;padding:2px 7px;font-size:9px;color:#85C1E9;font-family:var(--font-mono);letter-spacing:.04em;white-space:nowrap}
+.sdrl{font-size:10px;color:#6a8a9a;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sdrl a{color:#85C1E9;text-decoration:none}
+.sdrl a:hover{color:#29AA9F}
+.sdrbtn{font-size:10px;padding:3px 8px;cursor:pointer;border-radius:4px;border:.5px solid rgba(41,170,159,.35);background:transparent;color:#29AA9F;transition:background .13s;white-space:nowrap;flex-shrink:0}
+.sdrbtn:hover{background:rgba(41,170,159,.1)}
+.sov{grid-column:1/-1;border:.5px solid rgba(41,170,159,.2);border-radius:8px;background:#0d1b24;padding:10px 11px}
+.sovh{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.sovm{width:3px;height:24px;border-radius:2px;background:var(--ac,#29AA9F);flex-shrink:0}
+.sovk{font-size:9px;color:#6a8a9a;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:2px}
+.sovt{font-size:14px;font-weight:500;color:#ECF0F1;margin:0}
+.sovf{width:100%;height:460px;border:none;border-radius:6px;background:#fff}
+.sdw{font-size:14px;color:#6a8a9a;margin:0}
+.sdw strong{color:#85C1E9;font-weight:500}
+.sph{display:flex;align-items:center;gap:8px;color:#3a5a6a;font-size:13px;grid-column:1/-1}
+.spl{width:2px;height:26px;border-radius:1px;background:rgba(41,170,159,.25)}
+.svr{position:relative;overflow:hidden;border:.5px solid rgba(41,170,159,.18);border-radius:8px;background:linear-gradient(180deg,#102330 0%,#09141b 100%);padding:31px 11px 10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}
+.svr::before{content:'';position:absolute;top:0;left:0;right:0;height:21px;background:rgba(255,255,255,.03);border-bottom:.5px solid rgba(41,170,159,.12)}
+.svr::after{content:'';position:absolute;top:7px;left:10px;width:7px;height:7px;border-radius:50%;background:#f36b6b;box-shadow:12px 0 0 #e8b15d,24px 0 0 #41b883}
+.svlabel{font-size:9px;color:#6a8a9a;margin-bottom:7px;letter-spacing:.06em;text-transform:uppercase;display:block}
+.chat3{display:flex;flex-direction:column;gap:5px;margin-bottom:5px}
+.mu3{background:rgba(41,170,159,.12);color:#9abcc8;font-size:11px;padding:6px 9px;border-radius:7px 7px 2px 7px;align-self:flex-end;max-width:90%;line-height:1.5}
+.ma3{background:rgba(133,193,233,.08);color:#9abcc8;font-size:11px;padding:6px 9px;border-radius:2px 7px 7px 7px;align-self:flex-start;max-width:90%;line-height:1.5}
+.cpill3{font-size:9px;color:#29AA9F;background:rgba(41,170,159,.08);border:.5px solid rgba(41,170,159,.22);border-radius:8px;padding:2px 8px;align-self:center;text-align:center}
+.cflow3{display:flex;flex-direction:column;gap:4px}
+.cfr3{display:flex;align-items:center;gap:7px;font-family:var(--term-font);font-size:11px}
+.cfu3{background:rgba(41,170,159,.14);color:#29AA9F;padding:3px 7px;border-radius:4px;white-space:nowrap}
+.cfm3{background:rgba(133,193,233,.1);color:#85C1E9;padding:3px 7px;border-radius:4px;white-space:nowrap}
+.cfa3{color:#4a6a7a;font-size:11px}
+.cfmem3{font-size:9px;color:#3a5870;font-style:italic;padding-left:5px;border-left:2px solid rgba(41,170,159,.18);margin-left:2px}
+.traw3{font-family:var(--term-font);font-size:11px;color:#b7d6e1;background:rgba(9,20,27,.88);border:.5px solid rgba(41,170,159,.18);border-radius:6px;padding:7px 9px;line-height:1.75;margin-bottom:5px}
+.tv3{color:#29AA9F;background:rgba(41,170,159,.15);border-radius:3px;padding:0 3px}
+.tarr3{font-size:11px;color:#4a6a7a;text-align:center;margin:4px 0}
+.tfill3{font-family:var(--term-font);font-size:11px;color:#b7d6e1;background:rgba(9,20,27,.88);border:.5px solid rgba(133,193,233,.15);border-radius:6px;padding:7px 9px;line-height:1.75}
+.tfill3 strong{color:#ECF0F1;font-weight:500}
+.cblocks3{display:flex;align-items:stretch;gap:5px;margin-bottom:5px}
+.cb3{font-size:10px;font-family:var(--term-font);padding:5px 7px;border-radius:5px;flex:1;line-height:1.4;text-align:center}
+.cb3.ta{background:rgba(41,170,159,.13);color:#29AA9F;border:.5px solid rgba(41,170,159,.28)}
+.cb3.co{background:rgba(133,193,233,.1);color:#85C1E9;border:.5px solid rgba(133,193,233,.25)}
+.cb3.re{background:rgba(74,149,184,.1);color:#4a95b8;border:.5px solid rgba(74,149,184,.25)}
+.cbl3{font-size:8px;opacity:.6;text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+.cbp3{color:#4a6a7a;font-size:13px;flex-shrink:0;display:flex;align-items:center}
+.vnote3{font-size:9px;color:#3a5870;margin-top:7px;font-style:italic}
+.ril{display:inline-flex;align-items:center;border:.5px solid rgba(133,193,233,.28);border-radius:4px;overflow:hidden;font-size:10px;font-family:var(--term-font);white-space:nowrap}
+.ril-b{padding:2px 7px;background:rgba(133,193,233,.1);color:#85C1E9;letter-spacing:.04em}
+.ril-a{padding:2px 7px;color:#85C1E9;text-decoration:none;border-left:.5px solid rgba(133,193,233,.2)}
+.ril-a:hover{color:#29AA9F}
+.ril-btn{padding:2px 8px;background:transparent;border:none;border-left:.5px solid rgba(133,193,233,.2);color:#29AA9F;cursor:pointer;font-size:10px;font-family:var(--term-font);transition:background .13s}
+.ril-btn:hover{background:rgba(41,170,159,.1)}
+</style>
+
+<div class="pg">
+<div class="pg-h">
+<h1>Estruturas Básicas de Prompt</h1>
+<!-- <p>Clique em cada estrutura para explorar funcionamento, referências citadas, links diretos e visualização</p> -->
+</div>
+<div class="g5" id="G"></div>
+<div class="sd" id="D">
+  <div class="sph"><div class="spl"></div>Selecione uma estrutura acima para ver detalhes e visualização</div>
+</div>
+</div>
+
+<script>
+const C=[
+{id:'s1',n:'01',ac:'#29AA9F',
+t:'Single-turn',s:'Interação única e sem estado',
+desc:'Uma única chamada ao modelo, sem memória de interações anteriores. O modelo responde exclusivamente com base no prompt atual — stateless por definição. Simples, determinístico e reproduzível.',
+refs:[
+{id:'brown2020',badge:'arXiv:2005.14165',title:'Language Models are Few-Shot Learners',url:'https://arxiv.org/abs/2005.14165',embed:'https://arxiv.org/pdf/2005.14165',cite:'<strong>Brown et al. (2020)</strong> — <em>Language Models are Few-Shot Learners</em>: GPT-3 consolida o baseline moderno de zero-shot prompting.'},
+{id:'kojima2022',badge:'arXiv:2205.11916',title:'Large Language Models are Zero-Shot Reasoners',url:'https://arxiv.org/abs/2205.11916',embed:'https://arxiv.org/pdf/2205.11916',cite:'<strong>Kojima et al. (2022)</strong> — <em>Large Language Models are Zero-Shot Reasoners</em>: zero-shot chain-of-thought emerge mesmo em single-turn com “Let’s think step by step”.'}
+],
+why:'<strong>Ideal para:</strong> classificação, sumarização, geração de código isolado, extração de informação estruturada.',
+vis:`<span class="svlabel">Fluxo de interação</span>
+<div class="chat3">
+<div class="mu3">O que é GenAI?</div>
+<div class="ma3">GenAI refere-se a sistemas de IA capazes de gerar conteúdo novo — texto, imagens e código — a partir de padrões aprendidos em grandes volumes de dados.</div>
+</div>
+<div class="vnote3">Uma troca · Sem memória · Stateless · Determinístico</div>`
+},
+{id:'s2',n:'02',ac:'#85C1E9',
+t:'Multi-turn',s:'Série de interações com contexto',
+desc:'Sequência de mensagens onde o histórico completo é enviado ao modelo a cada turno. O contexto acumula dentro da context window, permitindo diálogo coerente e refinamento progressivo.',
+refs:[
+{id:'roller2021',badge:'ACL 2021',title:'Recipes for Building an Open-Domain Chatbot',url:'https://aclanthology.org/2021.eacl-main.24/',embed:'https://aclanthology.org/2021.eacl-main.24.pdf',cite:'<strong>Roller et al. (2021)</strong> — <em>Recipes for Building an Open-Domain Chatbot</em>: a coerência conversacional do BlenderBot depende do histórico acumulado.'},
+{id:'liu2023lost',badge:'arXiv:2307.03172',title:'Lost in the Middle: How Language Models Use Long Contexts',url:'https://arxiv.org/abs/2307.03172',embed:'https://arxiv.org/pdf/2307.03172',cite:'<strong>Liu et al. (2023)</strong> — <em>Lost in the Middle</em>: informações no centro de contextos longos tendem a ser menos recuperadas pelo modelo.'}
+],
+why:'<strong>Ideal para:</strong> assistentes conversacionais, tutoriais progressivos, refinamento iterativo de outputs complexos.',
+vis:`<span class="svlabel">Fluxo com contexto acumulado</span>
+<div class="chat3">
+<div class="mu3">Olá! Estou aprendendo sobre GenAI.</div>
+<div class="ma3">Ótimo! GenAI é uma família de modelos que geram conteúdo novo a partir de padrões aprendidos...</div>
+<div class="cpill3">contexto acumulado</div>
+<div class="mu3">Quais as técnicas mais usadas?</div>
+<div class="ma3">Considerando nosso contexto: Transformers, diffusion models e GANs são as mais relevantes...</div>
+</div>
+<div class="vnote3">Stateful · Histórico enviado a cada turno · Context window limitada</div>`
+},
+{id:'s3',n:'03',ac:'#5ba3cc',
+t:'Conversation Chains',s:'Encadeamento com memória explícita',
+desc:'Padrão arquitetural que gerencia e comprime o histórico para evitar overflow da context window. Tipos de memória: Buffer (histórico bruto), Summary (comprimido), Entity (entidades-chave) e Knowledge Graph.',
+refs:[
+{id:'zhong2023',badge:'arXiv:2305.10250',title:'MemoryBank: Enhancing Large Language Models with Long-Term Memory',url:'https://arxiv.org/abs/2305.10250',embed:'https://arxiv.org/pdf/2305.10250',cite:'<strong>Zhong et al. (2023)</strong> — <em>MemoryBank</em>: memória de longo prazo persistente para LLMs.'}
+],
+why:'<strong>Ideal para:</strong> agentes de longa duração, chatbots com memória persistente, workflows multi-etapa complexos.',
+vis:`<span class="svlabel">Arquitetura de memória</span>
+<div class="cflow3">
+<div class="cfr3"><span class="cfu3">Usuário 1</span><span class="cfa3">→</span><span class="cfm3">Modelo 1</span></div>
+<div class="cfmem3">buffer: histórico turno 1 salvo</div>
+<div class="cfr3"><span class="cfu3">Usuário 2</span><span class="cfa3">→</span><span class="cfm3">Modelo 2</span></div>
+<div class="cfmem3">summary: contexto comprimido</div>
+<div class="cfr3"><span class="cfu3">Usuário 3</span><span class="cfa3">→</span><span class="cfm3">Modelo 3</span></div>
+<div class="cfmem3">entity: entidades-chave persistidas</div>
+</div>
+<div class="vnote3">Buffer · Summary · Entity · Knowledge Graph · LangChain · LlamaIndex</div>`
+},
+{id:'s4',n:'04',ac:'#6bb8b4',
+t:'Prompt Templates',s:'Estruturas parametrizadas reutilizáveis',
+desc:'Estruturas com variáveis placeholder {var} substituídas dinamicamente em runtime. Separam a lógica do prompt do conteúdo variável — análogo à separação entre código e configuração em software de produção.',
+refs:[
+{id:'schick2021',badge:'ACL 2021',title:'Exploiting Cloze Questions for Few-Shot Text Classification and Natural Language Inference',url:'https://aclanthology.org/2021.eacl-main.20/',embed:'https://aclanthology.org/2021.eacl-main.20.pdf',cite:'<strong>Schick & Schütze (2021)</strong> — <em>Exploiting Cloze Questions for Few-Shot Text Classification and Natural Language Inference</em>: PET introduz templates textuais para few-shot learning.'},
+{id:'liu2023survey',badge:'DOI 10.1145/3560815',title:'Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing',url:'https://doi.org/10.1145/3560815',embed:'https://arxiv.org/pdf/2107.13586',cite:'<strong>Liu et al. (2023)</strong> — <em>Pre-train, Prompt, and Predict</em>: consolida o paradigma moderno de prompting em NLP.'}
+],
+why:'<strong>Ideal para:</strong> produção em escala, consistência de outputs, pipelines automatizados, A/B testing de prompts.',
+vis:`<span class="svlabel">Substituição de variáveis</span>
+<div class="traw3">Explique <span class="tv3">{conceito}</span> no campo de <span class="tv3">{campo}</span> para uma audiência <span class="tv3">{audiencia}</span>, de forma concisa.</div>
+<div class="tarr3">↓ variáveis preenchidas em runtime</div>
+<div class="tfill3">Explique <strong>Machine Learning</strong> no campo de <strong>Estatística</strong> para uma audiência <strong>executiva</strong>, de forma concisa.</div>
+<div class="vnote3">Jinja2 · LangChain PromptTemplate · Reuso · Escalabilidade · Consistência</div>`
+},
+{id:'s5',n:'05',ac:'#4a95b8',
+t:'Contextual Templates',s:'Tarefa + contexto + restrições',
+desc:'Templates estruturados que combinam três blocos semânticos: tarefa principal, contexto operacional e restrições/guardrails. O padrão mais robusto para produção — combina os benefícios de templates com especificação de domínio.',
+refs:[
+{id:'mishra2022',badge:'ACL 2022',title:'Cross-Task Generalization via Natural Language Crowdsourcing Instructions',url:'https://aclanthology.org/2022.acl-long.244/',embed:'https://aclanthology.org/2022.acl-long.244.pdf',cite:'<strong>Mishra et al. (2022)</strong> — <em>Cross-Task Generalization via Natural Language Crowdsourcing Instructions</em>: instruções estruturadas melhoram generalização cross-task.'},
+{id:'ouyang2022',badge:'arXiv:2203.02155',title:'Training Language Models to Follow Instructions with Human Feedback',url:'https://arxiv.org/abs/2203.02155',embed:'https://arxiv.org/pdf/2203.02155',cite:'<strong>Ouyang et al. (2022)</strong> — <em>InstructGPT</em>: restrições explícitas melhoram alinhamento.'},
+{id:'wei2022',badge:'arXiv:2201.11903',title:'Chain-of-Thought Prompting Elicits Reasoning in Large Language Models',url:'https://arxiv.org/abs/2201.11903',embed:'https://arxiv.org/pdf/2201.11903',cite:'<strong>Wei et al. (2022)</strong> — <em>Chain-of-Thought Prompting Elicits Reasoning in Large Language Models</em>: prompts bem estruturados favorecem raciocínio intermediário.'}
+],
+why:'<strong>Ideal para:</strong> aplicações de produção, agentes especializados, geração de conteúdo controlado, cenários de compliance.',
+vis:`<span class="svlabel">Composição dos blocos</span>
+<div class="cblocks3">
+<div class="cb3 ta">{tarefa}<div class="cbl3">Tarefa</div></div>
+<div class="cbp3">+</div>
+<div class="cb3 co">{contexto}<div class="cbl3">Contexto</div></div>
+<div class="cbp3">+</div>
+<div class="cb3 re">{restrições}<div class="cbl3">Guardrails</div></div>
+</div>
+<div class="tarr3">↓ prompt estruturado completo</div>
+<div class="tfill3" style="font-size:10px">Crie um logo para <strong>{tech startup focada em AI}</strong>, considerando que deve ser <strong>{azul e verde}</strong> e <strong>{simples o suficiente em tamanhos pequenos}</strong>.</div>
+<div class="vnote3">Tarefa clara · Contexto operacional · Restrições explícitas · Maior controle do output</div>`
+}
+];
+
+let aId=null;
+let openRefId=null;
+const PH=`<div class="sph"><div class="spl"></div>Selecione uma estrutura acima para ver detalhes e visualização</div>`;
+
+function shortUrl(url){
+  return url.replace('https://','').replace('http://','');
+}
+
+function renderRefs(c){
+  return c.refs.map(ref=>{
+    const isOpen=openRefId===ref.id;
+    return `<div class="sdri">
+<div class="sdcite"><a href="${ref.url}" target="_blank" rel="noopener noreferrer">${ref.cite}</a></div>
+<span class="ril"><span class="ril-b">${ref.badge}</span><a class="ril-a" href="${ref.url}" target="_blank" rel="noopener noreferrer">${shortUrl(ref.url)}</a><button class="ril-btn" onclick="toggleRef('${c.id}','${ref.id}')">${isOpen?'Ocultar':'Abrir'}</button></span>
+</div>`;
+  }).join('');
+}
+
+function renderViewer(c){
+  const ref=c.refs.find(item=>item.id===openRefId);
+  if(!ref)return '';
+  return `<div class="sov">
+<div class="sovh">
+<div class="sovm" style="background:${c.ac}"></div>
+<div><span class="sovk">Referência aberta no widget</span><p class="sovt">${ref.title}</p></div>
+</div>
+<iframe class="sovf" src="${ref.embed || ref.url}" loading="lazy" title="${ref.title}"></iframe>
+</div>`;
+}
+
+function rCards(){
+  document.getElementById('G').innerHTML=C.map(c=>`
+<div class="sc ${aId===c.id?'on':''}" style="--ac:${c.ac}" onclick="sel('${c.id}')">
+<span class="sn">${c.n}</span>
+<p class="st">${c.t}</p>
+<p class="ss">${c.s}</p>
+</div>`).join('');
+}
+
+function rDetail(c){
+  const d=document.getElementById('D');
+  d.style.setProperty('--ac',c.ac);
+  d.innerHTML=`
+<div>
+<div class="sdh"><div class="sdm" style="background:${c.ac}"></div>
+<div><p class="sdt">${c.t}</p><p class="sdtag">Estrutura ${c.n}</p></div></div>
+<p class="sdd">${c.desc}</p>
+<div class="sdac"><strong>Referências e links diretos:</strong>${renderRefs(c)}</div>
+<p class="sdw">${c.why}</p>
+</div>
+<div class="svr">${c.vis}</div>
+${renderViewer(c)}`;
+}
+
+function toggleRef(cardId,refId){
+  openRefId=openRefId===refId?null:refId;
+  const card=C.find(x=>x.id===cardId);
+  if(card)rDetail(card);
+}
+
+function sel(id){
+  if(aId===id){aId=null;openRefId=null;rCards();document.getElementById('D').innerHTML=PH;return;}
+  aId=id;
+  openRefId=null;
+  rCards();
+  rDetail(C.find(x=>x.id===id));
+}
+
+rCards();
+</script>

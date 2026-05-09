@@ -1,0 +1,181 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+*{box-sizing:border-box}
+.pg{padding:1.4rem 0.5rem 1rem;font-family:'Ubuntu', sans-serif;background:#0d1b24;border-radius:12px;--term-font:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace}
+.pg-header{text-align:center;margin-bottom:1.4rem}
+.pg-header h1{font-size:24px;font-weight:500;color:#29AA9F;margin:0 0 4px;letter-spacing:.01em}
+.pg-header p{font-size:15px;color:#6a8a9a;margin:0}
+.pg-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-bottom:1rem}
+.cc{border:.5px solid rgba(41,170,159,.2);border-radius:8px;padding:10px 9px 8px;cursor:pointer;transition:border-color .17s,background .17s,transform .13s;background:#102030;position:relative;overflow:hidden}
+.cc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--ac);opacity:.5;transition:opacity .17s}
+.cc:hover{border-color:rgba(41,170,159,.5);transform:translateY(-1px)}
+.cc:hover::before,.cc.on::before{opacity:1}
+.cc.on{border-color:#29AA9F;background:#152c3a}
+.cn{font-size:12px;font-weight:500;color:var(--ac);opacity:.75;margin-bottom:4px;display:block;letter-spacing:.08em;font-family:var(--font-mono)}
+.ct{font-size:15px;font-weight:500;color:#ECF0F1;margin:0 0 2px}
+.cs{font-size:13px;color:#6a8a9a;line-height:1.4;margin:0}
+.ob{font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(133,193,233,.1);color:#85C1E9;position:absolute;top:7px;right:7px;font-weight:500;letter-spacing:.04em}
+.dt{border:.5px solid rgba(41,170,159,.2);border-radius:10px;background:#102030;padding:1rem 1.2rem;margin-bottom:1rem;min-height:108px}
+.dh{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+.dm{width:3px;height:30px;border-radius:2px;background:var(--ac,#29AA9F);flex-shrink:0}
+.dtitle{font-size:18px;font-weight:500;color:#ECF0F1;margin:0}
+.dtag{font-size:13px;color:#6a8a9a;margin:0}
+.dd{font-size:15px;color:#b0c8d4;line-height:1.65;margin-bottom:8px}
+.dw{font-size:14px;color:#6a8a9a;margin-bottom:9px}
+.dw strong{color:#85C1E9;font-weight:500}
+.del{font-size:10px;color:#29AA9F;font-weight:500;margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em}
+.de{position:relative;overflow:hidden;font-family:var(--term-font);font-size:12px;background:linear-gradient(180deg,#102330 0%,#09141b 100%);border:.5px solid rgba(41,170,159,.2);border-radius:8px;padding:29px 12px 10px;color:#ECF0F1;line-height:1.65;white-space:pre-wrap;box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}
+.de::before{content:'';position:absolute;top:0;left:0;right:0;height:21px;background:rgba(255,255,255,.03);border-bottom:.5px solid rgba(41,170,159,.12)}
+.de::after{content:'';position:absolute;top:7px;left:10px;width:7px;height:7px;border-radius:50%;background:#f36b6b;box-shadow:12px 0 0 #e8b15d,24px 0 0 #41b883}
+.pb{border:.5px solid rgba(41,170,159,.2);border-radius:10px;background:linear-gradient(180deg,#102330 0%,#09141b 100%);overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}
+.ph{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:.5px solid rgba(41,170,159,.12);background:rgba(255,255,255,.03)}
+.ph-lbl{font-size:10px;font-weight:500;color:#6a8a9a;letter-spacing:.08em;text-transform:uppercase;font-family:var(--term-font)}
+.dots{display:flex;gap:5px}
+.dots span{width:8px;height:8px;border-radius:50%}
+.pbd{padding:13px 16px;font-family:var(--term-font);font-size:12px;line-height:1.9;color:#9abcc8}
+.pc{display:inline;border-radius:3px;padding:1px 3px;transition:background .22s,color .22s,opacity .22s;opacity:.28;color:#6a8a9a}
+.pc.lit{opacity:1;color:#ECF0F1;background:var(--bg)}
+.pbar{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-top:.5px solid rgba(41,170,159,.1)}
+.leg{display:flex;flex-wrap:wrap;gap:5px}
+.li{display:flex;align-items:center;gap:4px;font-size:10px;color:#6a8a9a;cursor:pointer;padding:2px 7px;border-radius:3px;border:.5px solid rgba(41,170,159,.18);background:transparent;transition:border-color .13s,color .13s}
+.li:hover{border-color:#29AA9F;color:#ECF0F1}
+.ld{width:7px;height:7px;border-radius:2px;flex-shrink:0}
+.btn-a{font-size:11px;padding:3px 10px;cursor:pointer;border-radius:4px;border:.5px solid rgba(41,170,159,.35);background:transparent;color:#29AA9F;letter-spacing:.03em;transition:background .13s}
+.btn-a:hover{background:rgba(41,170,159,.1)}
+.cta{text-align:center;margin-top:9px;font-size:12px;color:#3a5a6a}
+.cta span{cursor:pointer;color:#85C1E9}
+.cta span:hover{color:#29AA9F}
+.ph-msg{display:flex;align-items:center;gap:8px;color:#3a5a6a;font-size:13px}
+.ph-line{width:2px;height:26px;border-radius:1px;background:rgba(41,170,159,.25)}
+</style>
+<div class="pg">
+<div class="pg-header">
+<h1>Anatomia de um Prompt</h1>
+<!-- <p>Clique em cada componente para explorar sua função e exemplo</p> -->
+</div>
+<div class="pg-grid" id="G"></div>
+<div class="dt" id="D"><div class="ph-msg"><div class="ph-line"></div>Selecione um componente acima para ver detalhes e exemplos</div></div>
+<div class="pb">
+<div class="ph">
+<div class="dots"><span style="background:#29AA9F;opacity:.8"></span><span style="background:#85C1E9;opacity:.55"></span><span style="background:#29AA9F;opacity:.35"></span></div>
+<span class="ph-lbl">PROMPT COMPLETO — componentes realçados</span>
+<button class="btn-a" onclick="allOn()">Realçar todos</button>
+</div>
+<div class="pbd" id="PB"></div>
+<div class="pbar"><div class="leg" id="LG"></div></div>
+</div>
+<div class="cta"><span onclick="sendPrompt('Quais são as melhores práticas de prompt engineering para LLMs?')">Perguntar ao Claude sobre boas práticas de prompt engineering ↗</span></div>
+</div>
+<script>
+const C=[
+{id:'role',n:'01',t:'Role / Persona',s:'Quem o modelo deve ser',opt:false,ac:'#29AA9F',cc:'c1',
+desc:'Define a identidade, especialização e perspectiva que o modelo deve adotar. Um papel bem especificado muda fundamentalmente o estilo, vocabulário e profundidade da resposta.',
+why:'<strong>Por que importa:</strong> Ativa heurísticas internas associadas ao domínio — ex: médico → linguagem clínica + cautela ética.',
+ex:'Você é um estatístico PhD com 15 anos de experiência\nem modelagem de risco de crédito.'},
+{id:'ctx',n:'02',t:'Contexto',s:'Cenário e informações de fundo',opt:false,ac:'#85C1E9',cc:'c2',
+desc:'Fornece o pano de fundo necessário: empresa, projeto, restrições do ambiente, público-alvo. Reduz ambiguidade e direciona a resposta para a situação real.',
+why:'<strong>Por que importa:</strong> Sem contexto, o modelo generaliza. Com contexto, ele personaliza.',
+ex:'Estou preparando um relatório para diretores de um banco.\nDataset com 50k clientes: variáveis demográficas e transacionais.'},
+{id:'task',n:'03',t:'Instrução / Tarefa',s:'O que fazer explicitamente',opt:false,ac:'#29AA9F',cc:'c3',
+desc:'O núcleo do prompt. Descreve a ação desejada com verbos claros. Verbos fracos (fale sobre) geram respostas vagas; verbos fortes (analise, compare, gere) geram outputs acionáveis.',
+why:'<strong>Por que importa:</strong> "Explique" ≠ "Compare" ≠ "Critique" — cada verbo direciona a cognição do modelo de forma distinta.',
+ex:'Analise os principais preditores de default usando WoE/IV\ne explique cada variável em linguagem executiva.'},
+{id:'input',n:'04',t:'Input / Dados',s:'Conteúdo a ser processado',opt:false,ac:'#5ba3cc',cc:'c4',
+desc:'O material concreto sobre o qual o modelo deve operar: texto, tabela, código, dados. Deve ser delimitado claramente com tags XML ou triple backticks.',
+why:'<strong>Por que importa:</strong> Separar "o que fazer" de "com o quê fazer" é a origem #1 de outputs incorretos.',
+ex:'<dados>\nidade, renda_mensal, score_bureau, default\n35, 4500, 620, 0\n28, 2100, 480, 1\n</dados>'},
+{id:'ex',n:'05',t:'Exemplos (Few-shot)',s:'Demonstrações de input → output',opt:true,ac:'#6bb8b4',cc:'c5',
+desc:'Pares de exemplo que mostram o padrão esperado. Few-shot learning é um dos modificadores mais poderosos: demonstrar é mais eficaz que descrever.',
+why:'<strong>Por que importa:</strong> O modelo aprende estilo e nível de detalhe pelo padrão — não pela descrição verbal.',
+ex:'Formato esperado:\nscore_bureau | IV: 0.42 | Força: Forte\nInterpretação: score<500 → 3x mais risco de default.'},
+{id:'fmt',n:'06',t:'Formato de Saída',s:'Estrutura do resultado esperado',opt:true,ac:'#2a9f9f',cc:'c6',
+desc:'Especifica a forma do output: markdown, JSON, tabela, código Python, número de palavras. Elimina a necessidade de reformatação posterior.',
+why:'<strong>Por que importa:</strong> O modelo é indiferente ao formato sem instrução — especificar economiza ciclos de iteração.',
+ex:'Estruture a resposta em:\n1. Resumo executivo (≤ 3 frases)\n2. Tabela: Variável | IV | Interpretação\n3. Código Python sklearn'},
+{id:'tone',n:'07',t:'Tom / Estilo',s:'Como comunicar a resposta',opt:true,ac:'#85C1E9',cc:'c7',
+desc:'Define o registro comunicativo: técnico vs. acessível, formal vs. informal, didático vs. conciso. Crítico quando o público não é especialista.',
+why:'<strong>Por que importa:</strong> Tom inadequado faz um output tecnicamente correto ser inutilizável no contexto real.',
+ex:'Use linguagem executiva: evite jargões estatísticos.\nDefina o conceito em 1 frase antes de apresentar o resultado.'},
+{id:'grd',n:'08',t:'Restrições / Guardrails',s:'Limites e regras explícitas',opt:true,ac:'#4a95b8',cc:'c8',
+desc:'Define o que o modelo NÃO deve fazer. Restrições negativas são fundamentais para guiar o modelo para fora de padrões indesejados — alucinação, generalização excessiva.',
+why:'<strong>Por que importa:</strong> "Não interprete correlação como causalidade" protege a integridade analítica do output.',
+ex:'Restrições:\n- Correlação ≠ causalidade\n- Não extrapole além dos dados\n- Se incerto, diga explicitamente'},
+];
+
+const PKS=[
+{c:'c1',t:'[ROLE] Você é um estatístico PhD especializado em risco de crédito.'},
+{c:'',t:'\n'},
+{c:'c2',t:'[CONTEXTO] Relatório para diretores de banco. Dataset: 50k clientes.'},
+{c:'',t:'\n\n'},
+{c:'c3',t:'[TAREFA] Analise preditores de default com WoE/IV. Linguagem executiva.'},
+{c:'',t:'\n\n'},
+{c:'c4',t:'[DADOS]\nidade, renda, score_bureau, default\n35, 4500, 620, 0\n28, 2100, 480, 1'},
+{c:'',t:'\n\n'},
+{c:'c5',t:'[EXEMPLO] score_bureau | IV 0.42 | Forte → score<500 tem 3x mais risco.'},
+{c:'',t:'\n\n'},
+{c:'c6',t:'[FORMATO] 1. Resumo executivo  2. Tabela IV  3. Código Python sklearn'},
+{c:'',t:'\n\n'},
+{c:'c7',t:'[TOM] Linguagem executiva. Defina jargões em 1 frase antes de usar.'},
+{c:'',t:'\n\n'},
+{c:'c8',t:'[RESTRIÇÕES] Correlação ≠ causalidade. Se incerto, diga explicitamente.'},
+];
+
+const CM={c1:{color:'#29AA9F',bg:'rgba(41,170,159,.18)',lbl:'Role'},c2:{color:'#85C1E9',bg:'rgba(133,193,233,.13)',lbl:'Contexto'},c3:{color:'#29AA9F',bg:'rgba(41,170,159,.2)',lbl:'Tarefa'},c4:{color:'#5ba3cc',bg:'rgba(91,163,204,.15)',lbl:'Input'},c5:{color:'#6bb8b4',bg:'rgba(107,184,180,.15)',lbl:'Exemplos'},c6:{color:'#2a9f9f',bg:'rgba(42,159,159,.13)',lbl:'Formato'},c7:{color:'#85C1E9',bg:'rgba(133,193,233,.1)',lbl:'Tom'},c8:{color:'#4a95b8',bg:'rgba(74,149,184,.14)',lbl:'Restrições'}};
+
+let aId=null;
+const PH=`<div class="ph-msg"><div class="ph-line"></div>Selecione um componente acima para ver detalhes e exemplos</div>`;
+
+function rCards(){
+  document.getElementById('G').innerHTML=C.map(c=>`
+<div class="cc ${aId===c.id?'on':''}" style="--ac:${c.ac}" onclick="sel('${c.id}')">
+${c.opt?'<span class="ob">Opcional</span>':''}
+<span class="cn">${c.n}</span>
+<p class="ct">${c.t}</p>
+<p class="cs">${c.s}</p>
+</div>`).join('');
+}
+
+function rDetail(c){
+  const d=document.getElementById('D');
+  d.style.setProperty('--ac',c.ac);
+  d.innerHTML=`
+<div class="dh"><div class="dm" style="background:${c.ac}"></div>
+<div><p class="dtitle">${c.t}</p><p class="dtag">Componente ${c.n} · ${c.opt?'Opcional':'Essencial'}</p></div></div>
+<p class="dd">${c.desc}</p>
+<p class="dw">${c.why}</p>
+<div class="del">Exemplo de uso</div>
+<div class="de" style="--ac:${c.ac}">${c.ex}</div>`;
+}
+
+function rPrompt(ac){
+  document.getElementById('PB').innerHTML=PKS.map(k=>{
+    if(!k.c) return k.t.replace(/\n/g,'<br>');
+    const m=CM[k.c];
+    const on=!ac||k.c===ac;
+    return `<span class="pc ${k.c} ${on?'lit':''}" style="--bg:${m.bg}">${k.t}</span>`;
+  }).join('');
+}
+
+function rLegend(){
+  document.getElementById('LG').innerHTML=Object.entries(CM).map(([k,v])=>`
+<div class="li" onclick="selByC('${k}')"><span class="ld" style="background:${v.color}"></span>${v.lbl}</div>`).join('');
+}
+
+function sel(id){
+  if(aId===id){aId=null;rCards();rPrompt(null);document.getElementById('D').innerHTML=PH;return;}
+  aId=id;
+  const c=C.find(x=>x.id===id);
+  rCards();rDetail(c);rPrompt(c.cc);
+}
+
+function selByC(k){const c=C.find(x=>x.cc===k);if(c)sel(c.id);}
+
+function allOn(){
+  aId=null;rCards();rPrompt(null);
+  document.querySelectorAll('.pc').forEach(e=>e.classList.add('lit'));
+  document.getElementById('D').innerHTML=`<div class="ph-msg"><div class="ph-line" style="background:#29AA9F;opacity:1"></div>Todos os componentes realçados. Clique em um card para focar em um específico.</div>`;
+}
+
+rCards();rPrompt(null);rLegend();
+</script>

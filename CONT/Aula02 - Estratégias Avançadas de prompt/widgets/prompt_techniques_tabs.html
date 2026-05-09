@@ -1,0 +1,525 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+*{box-sizing:border-box}
+.mw{padding:1.1rem .4rem .8rem;font-family:'Ubuntu', sans-serif;background:#0d1b24;border-radius:12px;--term-font:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace}
+.tbar{display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:.5px solid rgba(41,170,159,.25);margin-bottom:.9rem}
+.tbar::-webkit-scrollbar{display:none}
+.tab{padding:7px 11px;font-size:14px;font-weight:500;white-space:nowrap;cursor:pointer;border-bottom:2px solid transparent;color:#6a8a9a;transition:color .15s,border-color .15s;flex-shrink:0}
+.tab:hover{color:#ECF0F1}
+.tab.on{color:#29AA9F;border-bottom-color:#29AA9F}
+.th{margin-bottom:.75rem}
+.th h2{font-size:20px;font-weight:500;color:#29AA9F;margin:0 0 2px}
+.th p{font-size:14px;color:#6a8a9a;margin:0 0 7px}
+.tdef{font-size:14px;color:#b0c8d4;background:#102030;border:.5px solid rgba(41,170,159,.2);border-left:3px solid #29AA9F;border-radius:6px;padding:7px 11px;line-height:1.65;margin-bottom:7px}
+.tdef strong{color:#29AA9F;font-weight:500}
+.axrow{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:.7rem}
+.axb{display:inline-flex;align-items:center;background:rgba(133,193,233,.1);border:.5px solid rgba(133,193,233,.3);border-radius:4px;padding:2px 7px;font-size:10px;color:#85C1E9;font-family:var(--font-mono);letter-spacing:.04em;white-space:nowrap}
+.axl{font-size:11px;color:#6a8a9a;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.axl a{color:#85C1E9;text-decoration:none}
+.axl a:hover{color:#29AA9F}
+.bov{font-size:10px;padding:3px 9px;cursor:pointer;border-radius:4px;border:.5px solid rgba(41,170,159,.35);background:transparent;color:#29AA9F;transition:background .13s;white-space:nowrap;flex-shrink:0}
+.bov:hover{background:rgba(41,170,159,.1)}
+.bov:disabled{opacity:.4;cursor:not-allowed}
+.ovp{border:.5px solid rgba(41,170,159,.2);border-radius:7px;background:#102030;padding:9px 12px;margin-bottom:.7rem;font-size:11.5px;color:#b0c8d4;line-height:1.7;display:none}
+.ovp strong{color:#85C1E9}
+.ovld{display:flex;align-items:center;gap:7px;font-size:11px;color:#6a8a9a}
+.sp{width:11px;height:11px;border:1.5px solid rgba(41,170,159,.3);border-top-color:#29AA9F;border-radius:50%;animation:sp .8s linear infinite;flex-shrink:0}
+@keyframes sp{to{transform:rotate(360deg)}}
+.cg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:.8rem}
+.cc{border:.5px solid rgba(41,170,159,.2);border-radius:7px;padding:9px 8px 7px;cursor:pointer;transition:border-color .15s,background .15s,transform .12s;background:#102030;position:relative;overflow:hidden}
+.cc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--ac,#29AA9F);opacity:.5;transition:opacity .15s}
+.cc:hover{border-color:rgba(41,170,159,.5);transform:translateY(-1px)}
+.cc:hover::before,.cc.on::before{opacity:1}
+.cc.on{border-color:#29AA9F;background:#152c3a}
+.cn{font-size:10px;font-weight:500;color:var(--ac,#29AA9F);margin-bottom:3px;display:block;letter-spacing:.08em;font-family:var(--font-mono)}
+.ct{font-size:14px;font-weight:500;color:#ECF0F1;margin:0 0 2px;line-height:1.3}
+.cs{font-size:12px;color:#6a8a9a;line-height:1.4;margin:0}
+.dp{border:.5px solid rgba(41,170,159,.2);border-radius:9px;background:#102030;padding:.9rem 1.1rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:start;min-height:165px}
+.dph{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.dpm{width:3px;height:24px;border-radius:2px;flex-shrink:0}
+.dpt{font-size:16px;font-weight:500;color:#ECF0F1;margin:0}
+.dps{font-size:13px;color:#6a8a9a;margin:0}
+.dpd{font-size:14px;color:#b0c8d4;line-height:1.65;margin-bottom:6px}
+.dpac{font-size:12px;color:#6a8a9a;line-height:1.55;margin-bottom:6px;padding:6px 8px;background:rgba(133,193,233,.07);border-radius:5px;border-left:2px solid rgba(133,193,233,.3)}
+.dpac strong{color:#85C1E9;font-weight:500}
+.rfl{color:#ECF0F1;font-weight:500}
+.rft{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:7px}
+.rfb{display:inline-flex;align-items:center;background:rgba(133,193,233,.1);border:.5px solid rgba(133,193,233,.3);border-radius:4px;padding:2px 7px;font-size:10px;color:#85C1E9;font-family:var(--term-font);letter-spacing:.04em;white-space:nowrap}
+.rfa{font-size:11px;color:#85C1E9;text-decoration:none;word-break:break-all}
+.rfa:hover{color:#29AA9F}
+.drv{border:.5px solid rgba(41,170,159,.2);border-radius:7px;background:#0d1b24;margin:-1px 0 8px;display:none;overflow:hidden}
+.dpw{font-size:11px;color:#6a8a9a;margin:0}
+.dpw strong{color:#85C1E9;font-weight:500}
+.dpp{display:flex;align-items:center;gap:8px;color:#3a5a6a;font-size:12px;grid-column:1/-1}
+.dppl{width:2px;height:22px;border-radius:1px;background:rgba(41,170,159,.22)}
+.vp{border:.5px solid rgba(41,170,159,.12);border-radius:7px;background:#0d1b24;padding:9px 10px}
+.vplb{font-size:9px;color:#6a8a9a;margin-bottom:5px;letter-spacing:.06em;text-transform:uppercase;display:block}
+.pb{position:relative;overflow:hidden;font-family:var(--term-font);font-size:10.5px;color:#b7d6e1;background:linear-gradient(180deg,#102330 0%,#09141b 100%);border:.5px solid rgba(41,170,159,.2);border-radius:7px;padding:28px 9px 8px;line-height:1.85;white-space:pre-wrap;margin-bottom:3px;box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}
+.pb::before{content:'';position:absolute;top:0;left:0;right:0;height:21px;background:rgba(255,255,255,.03);border-bottom:.5px solid rgba(41,170,159,.12)}
+.pb::after{content:'';position:absolute;top:7px;left:9px;width:7px;height:7px;border-radius:50%;background:#f36b6b;box-shadow:12px 0 0 #e8b15d,24px 0 0 #41b883}
+.term{border:.5px solid rgba(41,170,159,.2);border-radius:7px;overflow:hidden;background:linear-gradient(180deg,#102330 0%,#09141b 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.03);margin-bottom:3px}
+.termbar{display:flex;align-items:center;gap:8px;padding:6px 9px;background:rgba(255,255,255,.03);border-bottom:.5px solid rgba(41,170,159,.12)}
+.tdots{display:flex;gap:4px}
+.tdot{width:7px;height:7px;border-radius:50%;display:block}
+.tdot.r{background:#f36b6b}
+.tdot.y{background:#e8b15d}
+.tdot.g{background:#41b883}
+.ttitle{font-size:9px;color:#6a8a9a;letter-spacing:.08em;text-transform:uppercase;font-family:var(--term-font)}
+.termbody{padding:9px 10px;font-family:var(--term-font);font-size:10.5px;line-height:1.9;color:#b7d6e1}
+.tline{display:block}
+.tprompt{color:#29AA9F;margin-right:6px}
+.tdim{color:#6f93a3}
+.tcursor{display:inline-block;width:7px;height:12px;background:#29AA9F;border-radius:1px;vertical-align:-2px;animation:blink .95s steps(1) infinite}
+.hv{color:#29AA9F;background:rgba(41,170,159,.15);border-radius:3px;padding:0 2px}
+.hk{color:#85C1E9;font-weight:500}
+.hs{color:#6bb8b4;font-weight:500}
+.hc{color:#4a95b8;font-weight:500}
+.ha{color:#e8a87c;font-weight:500}
+.vn{font-size:9px;color:#3a5870;margin-top:4px;font-style:italic}
+.vc2{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.vcl{font-size:9px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;display:block}
+@keyframes blink{50%{opacity:0}}
+.ril{display:inline-flex;align-items:center;border:.5px solid rgba(133,193,233,.28);border-radius:4px;overflow:hidden;font-size:10px;font-family:var(--term-font);white-space:nowrap}
+.ril-b{padding:2px 7px;background:rgba(133,193,233,.1);color:#85C1E9;letter-spacing:.04em}
+.ril-a{padding:2px 7px;color:#85C1E9;text-decoration:none;border-left:.5px solid rgba(133,193,233,.2)}
+.ril-a:hover{color:#29AA9F}
+.ril-btn{padding:2px 8px;background:transparent;border:none;border-left:.5px solid rgba(133,193,233,.2);color:#29AA9F;cursor:pointer;font-size:10px;font-family:var(--term-font);transition:background .13s}
+.ril-btn:hover{background:rgba(41,170,159,.1)}
+</style>
+<div class="mw">
+<div class="tbar" id="TB"></div>
+<div id="TC"></div>
+</div>
+<script>
+const T=[
+{id:'zs',tab:'Zero-Shot',title:'Zero-Shot Prompting',sub:'Sem exemplos instruction tuning + escala habilitam generalização direta',
+ax:'arXiv:2402.07927',pdf:'https://arxiv.org/pdf/2402.07927',
+def:'Zero-shot prompting submete apenas a instrução ao modelo <strong>sem exemplos</strong> de pares input→output no contexto. A capacidade emergiu como subproduto do <strong>instruction tuning</strong> (FLAN, T0) e do <strong>RLHF</strong> (InstructGPT, Claude), e escala com o tamanho do modelo: Wei et al. (2022) documentaram que certas capacidades zero-shot são <em>emergentes</em> ausentes em modelos menores e abruptas em modelos maiores. A qualidade do output é determinada por três dimensões da instrução: <strong>clareza</strong> da tarefa, <strong>especificidade</strong> do output e <strong>estrutura</strong> não pelo modelo em si.',
+ac:'#29AA9F',cards:[
+{n:'01',t:'Especificação de Tarefa',s:'Instrução direta com output definido',desc:'Instrução autocontida que combina três elementos: <strong>especificação de papel</strong> (persona/role), <strong>definição precisa da tarefa</strong> e <strong>restrições de output</strong>. A especificação de papel ancora o modelo ao domínio e reduz ambiguidade sem custo de exemplos. Brown et al. (2020) estabeleceram que GPT-3 já exibia forte generalização zero-shot em tarefas de linguagem fundamento empírico da técnica.',ref:{label:'Brown et al. (2020)',note:'Language Models are Few-Shot Learners',src:'arXiv',href:'https://arxiv.org/abs/2005.14165',pdf:'https://arxiv.org/pdf/2005.14165'},why:'Classificação, NER, sumarização, extração. Persona + restrição de formato aumentam precisão sem custo de exemplos.',vis:`<span class="vplb">Classificação de sentimento</span><div class="term"><div class="termbar"><div class="tdots"><span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span></div><span class="ttitle">sentiment-prompt.txt</span></div><div class="termbody"><span class="tline"><span class="tprompt">$</span>classifique o texto a seguir</span><span class="tline"><span class="tdim">labels:</span> <span class="hv">positivo</span>, <span class="hv">negativo</span>, <span class="hv">neutro</span></span><span class="tline"><span class="tdim">output:</span> <span class="hk">Apenas a resposta.</span></span><span class="tline"><span class="tdim">text:</span> <span class="hv">{texto}</span></span><span class="tline"><span class="tprompt">sentiment&gt;</span><span class="tcursor"></span></span></div></div><div class="vn">Instrução · Opções · Restrição de formato · Placeholder</div>`},
+{n:'02',t:'Especificação de Formato',s:'Seções nomeadas no prompt',desc:'O prompt descreve a <strong>estrutura esperada do output</strong> via seções nomeadas, schemas JSON/Markdown ou templates sem exemplos. Ouyang et al. (2022) demonstraram que o RLHF (InstructGPT) amplia dramaticamente a capacidade de seguir instruções estruturais, tornando modelos fine-tuned muito mais confiáveis do que base models em tarefas de formatação zero-shot.',ref:{label:'Ouyang et al. (2022)',note:'Training language models to follow instructions with human feedback',src:'arXiv',href:'https://arxiv.org/abs/2203.02155',pdf:'https://arxiv.org/pdf/2203.02155'},why:'Relatórios estruturados, outputs JSON, pipelines de automação. Especificar o schema no prompt torna o LLM programável reduz pós-processamento e aumenta consistência em produção.',vis:`<span class="vplb">Artigo estruturado</span><div class="pb">Escreva sobre <span class="hv">{topico}</span>. Formato:
+
+<span class="hc">Headline:</span> [Título atrativo]
+<span class="hc">Lead:</span> [Introdução resumida]
+<span class="hc">Body:</span> [2-3 parágrafos]
+<span class="hc">Conclusion:</span> [Chamada para ação]</div><div class="vn">Seções nomeadas · Sem exemplos · Estrutura induzida pelo prompt</div>`},
+{n:'03',t:'Multi-step Reasoning',s:'Passos explícitos e numerados',desc:'Adicionar um <strong>trigger phrase</strong> ("Vamos pensar passo a passo") instancia Zero-shot CoT sem nenhum exemplo. Kojima et al. (2022) demonstraram que esse único acréscimo melhora dramaticamente tarefas de aritmética e raciocínio lógico em LLMs de larga escala. O modelo externaliza pensamento intermediário antes da resposta final transformando um black-box em raciocínio auditável e corrigível.',ref:{label:'Kojima et al. (2022)',note:'Large Language Models are Zero-Shot Reasoners',src:'arXiv',href:'https://arxiv.org/abs/2205.11916',pdf:'https://arxiv.org/pdf/2205.11916'},why:'Análise argumentativa, problemas matemáticos, avaliação crítica. Zero-shot CoT é menos confiável que few-shot CoT para aritmética combine com self-consistency para robustez sem exemplos manuais.',vis:`<span class="vplb">Análise argumentativa</span><div class="pb">Analise o texto:
+<span class="hs">1. Argumento principal:</span> Tese central.
+<span class="hs">2. Evidências:</span> Suportes listados.
+<span class="hs">3. Contra-argumentos:</span> Objeções.
+
+Text: <span class="hv">{text}</span>
+Analysis:</div><div class="vn">Zero-shot CoT · Passos nomeados · Raciocínio estruturado</div>`},
+{n:'04',t:'Análise Comparativa',s:'Básico vs. estruturado',desc:'Ilustra que o <strong>mesmo modelo</strong> com o <strong>mesmo conhecimento</strong> pré-treinado produz outputs radicalmente diferentes conforme a estruturação da instrução. Evidência empírica do princípio central de zero-shot: em modelos com instruction tuning, a qualidade é determinada mais pelo engenheiro de prompt do que pelo modelo a instrução é a "interface de programação" do LLM.',ref:null,why:'Explicações técnicas, análises de domínio, documentação estruturada. Dimensões analíticas explícitas substituem exemplos cobertura e profundidade sem custo de tokens de few-shot.',vis:`<span class="vplb">Básico vs. estruturado</span><div class="vc2"><div><span class="vcl" style="color:#6a8a9a">Básico</span><div class="pb" style="font-size:10px;margin:0">Explique <span class="hv">{topico}</span>.</div></div><div><span class="vcl" style="color:#6bb8b4">Estruturado</span><div class="pb" style="font-size:10px;margin:0">Explique <span class="hv">{topico}</span>:
+<span class="hs">1.</span> Definição
+<span class="hs">2.</span> Fatores-chave
+<span class="hs">3.</span> Aplicações
+<span class="hs">4.</span> Impactos</div></div></div><div class="vn">Mesma instrução outputs radicalmente diferentes</div>`},
+]},
+{id:'cot',tab:'CoT',title:'Chain-of-Thought (CoT)',sub:'Raciocínio externalizado scaffolding cognitivo que emerge com a escala',
+ax:'arXiv:2201.11903',pdf:'https://arxiv.org/pdf/2201.11903',
+def:'Chain-of-Thought obriga o modelo a externalizar <strong>pensamento intermediário</strong> antes da resposta final. Wei et al. (2022) demonstraram que incluir cadeias de raciocínio nos prompts elicita capacidades emergentes de raciocínio em modelos com &gt;100B parâmetros praticamente invisíveis em modelos menores. A técnica atua como <strong>scaffolding cognitivo</strong>: decompor o problema em passos força coerência lógica que seria perdida em uma resposta direta, e torna o raciocínio do modelo <em>auditável e corrigível</em>.',
+ac:'#5ba3cc',cards:[
+{n:'01',t:'Zero-shot CoT',s:'"Vamos pensar passo a passo"',desc:'Kojima et al. (2022) descobriram que appending <strong>"Let\'s think step by step"</strong> sem nenhum exemplo já elicita raciocínio encadeado em LLMs de larga escala. O trigger phrase funciona como uma <strong>âncora cognitiva</strong>: sinaliza ao modelo que deve ativar um modo de raciocínio sequencial em vez de completar padrões superficialmente. Custo zero de anotação, ganho expressivo de precisão.',ref:{label:'Kojima et al. (2022)',note:'Large Language Models are Zero-Shot Reasoners',src:'arXiv',href:'https://arxiv.org/abs/2205.11916',pdf:'https://arxiv.org/pdf/2205.11916'},why:'Aritmética, lógica, raciocínio multi-passo sem exemplos disponíveis. Eficácia dependente da escala modelos &lt;7B respondem pouco; &gt;70B respondem dramaticamente (efeito emergente).',vis:`<span class="vplb">Zero-shot CoT</span><div class="pb">Qual a soma dos ímpares em:
+3, 7, 8, 2, 5, 9?
+
+<span class="hk">Vamos pensar passo a passo.</span></div><div class="vn">Um trigger phrase · Sem exemplos · Elicita raciocínio implícito</div>`},
+{n:'02',t:'Few-shot CoT',s:'Exemplos com raciocínio explícito',desc:'Variante original de Wei et al. (2022): cada exemplo few-shot inclui não apenas o par input→output, mas também a <strong>cadeia de raciocínio explícita</strong>. O modelo aprende o padrão de "pensar antes de responder" e imita a granularidade, estilo e notação dos passos fornecidos permitindo controle fino sobre como o raciocínio é estruturado.',ref:null,why:'Domínios especializados onde zero-shot CoT produz raciocínio superficial. Trade-off: custo de anotar 2–5 exemplos vs. ganho de precisão e controle de estilo.',vis:`<span class="vplb">Few-shot CoT</span><div class="pb"><span class="hs">[Exemplo]</span>
+P: João tem 5 maçãs. Dá 2 para Ana.
+<span class="hk">R: João começa com 5. Dá 2.
+   5 - 2 = 3. João tem 3 maçãs.</span>
+
+P: <span class="hv">{problema}</span>
+R:</div><div class="vn">Raciocínio explícito no exemplo · Padrão aprendido pelo modelo</div>`},
+{n:'03',t:'Auto-CoT',s:'Geração automática de cadeias',desc:'Zhang et al. (2022) propuseram eliminar anotação manual em dois estágios: (1) <strong>clustering</strong> das questões para garantir diversidade de tipos; (2) <strong>geração automática</strong> de cadeias via zero-shot CoT para um representante de cada cluster. Os exemplos auto-gerados substituem os humanos com desempenho comparável ao few-shot CoT anotado à mão em múltiplos benchmarks.',ref:{label:'Zhang et al. (2022)',note:'Automatic Chain of Thought Prompting in Large Language Models',src:'arXiv',href:'https://arxiv.org/abs/2210.03493',pdf:'https://arxiv.org/pdf/2210.03493'},why:'Elimina custo de anotação sem sacrifício significativo de precisão. Cadeias auto-geradas podem conter erros o clustering mitiga a propagação de um erro sistêmico para todo o conjunto.',vis:`<span class="vplb">Pipeline Auto-CoT</span><div class="pb"><span class="hs">1.</span> Diversificar questões
+   (clustering do dataset)
+<span class="hs">2.</span> Gerar raciocínio via zero-shot CoT
+   "Vamos pensar passo a passo."
+<span class="hs">3.</span> Usar como exemplos few-shot CoT</div><div class="vn">Auto-geração de exemplos · Sem anotação manual</div>`},
+{n:'04',t:'Self-Consistency',s:'Múltiplos caminhos, voto majoritário',desc:'Wang et al. (2022) demonstraram que amostrar <strong>N cadeias de raciocínio</strong> com temperatura &gt; 0 e eleger a resposta por voto majoritário supera consistentemente o greedy decoding (T=0) em benchmarks de aritmética e raciocínio. A intuição: raciocínios corretos convergem para a mesma resposta por caminhos diferentes; os incorretos divergem a votação filtra o ruído estocástico.',ref:{label:'Wang et al. (2022)',note:'Self-Consistency Improves Chain of Thought Reasoning in Language Models',src:'arXiv',href:'https://arxiv.org/abs/2203.11171',pdf:'https://arxiv.org/pdf/2203.11171'},why:'Decisões de alta consequência onde um único raciocínio pode ser falho. N × custo de inferência calibre N (tipicamente 5–40); ganhos marginais decrescem após N≈20.',vis:`<span class="vplb">Self-consistency</span><div class="pb">Mesmo prompt → 4 amostras (T > 0):
+
+<span class="hs">Raciocínio 1:</span> → Resposta: <span class="hk">3</span>
+<span class="hs">Raciocínio 2:</span> → Resposta: <span class="hk">3</span>
+<span class="hs">Raciocínio 3:</span> → Resposta: 5
+<span class="hs">Raciocínio 4:</span> → Resposta: <span class="hk">3</span>
+
+Voto majoritário → Final: <span class="hk">3</span></div><div class="vn">N amostras · Voto majoritário · +custo · +robustez</div>`},
+]},
+{id:'tot',tab:'ToT',title:'Tree-of-Thought (ToT)',sub:'Deliberate problem solving expansão e poda de raciocínios paralelos',
+ax:'arXiv:2305.10601',pdf:'https://arxiv.org/pdf/2305.10601',
+def:'Yao et al. (2023) propuseram ToT como generalização de CoT: em vez de um único caminho linear, o LLM mantém múltiplos raciocínios em paralelo organizados como uma <strong>árvore</strong>. Cada nó é um pensamento parcial coerente; cada nível representa um passo. Um segundo componente <strong>avaliador LLM</strong> poda ramos inviáveis, e algoritmos de busca clássicos (BFS/DFS) controlam a exploração. A inspiração é a dicotomia de Kahneman: CoT emula o <em>Sistema 1</em> (rápido, sequencial); ToT emula o <em>Sistema 2</em> (deliberado, com backtracking).',
+ac:'#6bb8b4',cards:[
+{n:'01',t:'Geração de Pensamentos',s:'Múltiplos raciocínios paralelos',desc:'A partir de um estado-nó, o LLM gera <strong>k pensamentos candidatos</strong> cada um é um próximo passo coerente e parcial, não a solução final. A geração pode usar sampling independente (k amostras com T &gt; 0) ou proposta sequencial ("gere k pensamentos distintos"). Yao et al. usaram k=5 no benchmark 24-game, onde o CoT padrão acertava 4% e ToT atingia 74%.',ref:null,why:'Planejamento com restrições, escrita criativa, trade-offs multi-critério. k controla a largura da exploração k alto amplia cobertura mas multiplica custo por nível.',vis:`<span class="vplb">Geração de candidatos</span><div class="pb">Estado: <span class="hv">{problema_parcial}</span>
+
+Gere <span class="hk">3 próximos passos</span> candidatos:
+<span class="hs">→ Pensamento A:</span> {abordagem_1}
+<span class="hs">→ Pensamento B:</span> {abordagem_2}
+<span class="hs">→ Pensamento C:</span> {abordagem_3}</div><div class="vn">N=1 em CoT · N≥2 em ToT · Exploração não-linear</div>`},
+{n:'02',t:'Avaliação de Estados',s:'Válido / Inválido / Promissor',desc:'O LLM atua como <strong>avaliador/crítico</strong> de cada estado intermediário classifica como Promissor (expandir), Válido (manter) ou Inválido (podar). Essa separação entre gerador e avaliador é o que distingue ToT de self-consistency: a poda ocorre <em>antes</em> de descer ao próximo nível, reduzindo o custo total de exploração e evitando que caminhos ruins se aprofundem.',ref:null,why:'Poda guiada por LLM dispensa heurísticas manuais. O avaliador também erra voting com múltiplos avaliadores aumenta confiabilidade da poda em domínios críticos.',vis:`<span class="vplb">Avaliação de estados</span><div class="pb">Avalie o pensamento:
+<span class="hv">{pensamento_candidato}</span>
+
+É <span class="hs">certo</span>, <span class="ha">errado</span> ou <span class="hk">incerto</span>?
+Justifique em 1 frase.</div><div class="vn">Poda de ramos inviáveis · Avaliação por LLM · Busca guiada</div>`},
+{n:'03',t:'Busca em Largura (BFS)',s:'Nível a nível, k melhores por nível',desc:'Mantém um conjunto de estados do nível atual e avança <strong>nível a nível</strong>, preservando apenas os k melhores avaliados antes de descer. Garante encontrar a solução de menor profundidade. Custo: O(k<sup>d</sup>), onde d é a profundidade cresce exponencialmente, tornando BFS prático apenas para problemas rasos (d ≤ 3–4) com k controlado.',ref:null,why:'Problemas com solução em poucos passos com múltiplas alternativas no mesmo nível. BFS preferível quando comparar todos os ramos antes de comprometer com um é essencial.',vis:`<span class="vplb">BFS nível a nível</span><div class="pb">Nível 1: <span class="hs">A B C</span>
+  ↓ avaliar (manter k=2 melhores)
+Nível 2: <span class="hs">A1 A2 B1 B2</span>
+  ↓ avaliar (manter k=2 melhores)
+Nível 3: <span class="hk">A1a A2b</span> → solução ótima</div><div class="vn">Completeza · Ótimo local garantido · Custo proporcional à largura</div>`},
+{n:'04',t:'Busca em Profundidade (DFS)',s:'Caminho completo com backtracking',desc:'Segue um ramo até a solução ou até encontrar um estado Inválido neste caso, faz <strong>backtracking</strong> ao nó-pai e tenta o próximo candidato. Mais eficiente em memória que BFS (mantém apenas o caminho atual na pilha). Risco: pode aprofundar em um ramo ruim antes de retroceder limitar a profundidade máxima (IDDFS) mitiga esse problema.',ref:null,why:'Planejamento sequencial profundo, geração de texto longo, otimização com muitas etapas. Menor custo de memória que BFS, mas sem garantia de solução ótima aceita a primeira viável.',vis:`<span class="vplb">DFS com backtracking</span><div class="pb">A → A1 → A1a → <span class="ha">inválido</span>
+         ↑ backtrack
+A → A1 → A1b → <span class="hs">promissor</span>
+      → A1b1 → <span class="hk">solução final</span></div><div class="vn">Eficiência em memória · Backtracking · Espaços profundos</div>`},
+]},
+{id:'react',tab:'ReAct',title:'ReAct (Reason + Act)',sub:'Agentes com ferramentas grounding iterativo por Thought → Action → Observation',
+ax:'arXiv:2210.03629',pdf:'https://arxiv.org/pdf/2210.03629',
+def:'Yao et al. (2022) demonstraram que intercalar <strong>raciocínio</strong> (Thought), <strong>execução</strong> (Action) e <strong>feedback externo</strong> (Observation) supera tanto CoT puro (raciocínio sem grounding) quanto Act-Only (ação sem diagnóstico) em benchmarks de QA multi-hop e tomada de decisão. A inovação central é o <em>grounding iterativo</em>: cada Observation ancora o raciocínio subsequente em dados reais eliminando alucinações que surgiriam de um único passo de geração sem verificação externa.',
+ac:'#4a95b8',cards:[
+{n:'01',t:'Thought',s:'Traço de raciocínio interno',desc:'O Thought é um traço de raciocínio interno não executado, apenas registrado no contexto. Funciona como <strong>plano de intenção</strong>: o modelo articula o que já sabe, o que ainda precisa descobrir e qual ação tomar. Yao et al. mostraram que remover o Thought (Act-Only) reduz precisão em QA multi-hop em 18–34%, pois o agente age sem diagnóstico prévio.',ref:null,why:'Raciocínio explícito torna cada decisão auditável e facilita debugging. Thoughts devem ser curtos e acionáveis verbose demais consome contexto sem ganho.',vis:`<span class="vplb">Thought trace</span><div class="pb"><span class="hk">Thought 1:</span>
+Preciso saber a população de
+Brasília para comparar com SP.
+Vou buscar essa informação.
+
+<span class="hk">Thought 2:</span>
+Com dados de ambas as cidades,
+posso calcular a diferença.</div><div class="vn">Raciocínio interno · Não executado · Contexto para próxima ação</div>`},
+{n:'02',t:'Action',s:'Chamada a ferramenta externa',desc:'Com base no Thought, o modelo emite uma ação no formato padronizado <strong>Ferramenta[argumentos]</strong> parsável pelo orchestrador. O catálogo de ferramentas disponíveis (Search, Calculator, Code, API, Finish) define a fronteira de capacidade do agente. Exatamente uma ação é emitida por vez disciplina que mantém o estado do agente rastreável e controlável.',ref:null,why:'Qualquer interface que retorne texto pode ser uma Action bancos de dados, APIs, interpretadores. Declarar o catálogo e formato no prompt previne alucinação de ferramentas inexistentes.',vis:`<span class="vplb">Action call</span><div class="pb"><span class="hs">Action 1:</span>
+Search[<span class="hv">população Brasília 2024</span>]
+
+<span class="hs">Action 2:</span>
+Search[<span class="hv">população São Paulo 2024</span>]
+
+<span class="hs">Action 3:</span>
+Calculator[<span class="hv">22.8M - 3.1M</span>]
+
+<span class="hs">Action 4:</span>
+Finish[<span class="hk">SP é maior por 19.7M</span>]</div><div class="vn">Tipos: Search · Lookup · Calculator · Code · API · Finish</div>`},
+{n:'03',t:'Observation',s:'Resultado da ferramenta processado',desc:'O resultado da ferramenta é injetado de volta ao contexto como texto literal o mecanismo de <strong>grounding externo</strong> do ReAct. O contexto acumula evidências reais a cada iteração, substituindo progressivamente o conhecimento paramétrico (sujeito a alucinação) por dados verificados. O próximo Thought parte do estado atualizado.',ref:null,why:'O modelo revisa o plano a cada Observation encontra dados contraditórios, subproblemas novos ou confirmações. Observations longas consomem contexto sumarize antes de injetar em pipelines com N elevado.',vis:`<span class="vplb">Observation</span><div class="pb"><span class="hs">Action:</span> Search[Brasília população]
+<span class="ha">Observation:</span>
+  Brasília: 3,094,325 hab.
+  (IBGE 2022)
+
+<span class="hk">Thought 2:</span>
+Agora preciso da população de
+SP para a comparação.</div><div class="vn">Resultado da ferramenta · Atualiza contexto · Guia próximo Thought</div>`},
+{n:'04',t:'Loop ReAct',s:'Thought → Action → Observation × N',desc:'O loop T→A→O se repete N vezes até o modelo emitir <strong>Finish[resposta]</strong>. O histórico acumulado Thoughts, Actions e Observations anteriores é a <em>memória de curto prazo</em> do agente: guia cada nova decisão, mas cresce linearmente com N. Essa dualidade (mais contexto = melhor diagnóstico, mas maior custo) é o principal trade-off de design de agentes ReAct.',ref:null,why:'QA multi-hop, pipelines de diagnóstico, research assistants, agentes de automação. N &gt; 10 iterações esgota o contexto use sumarização periódica ou chunking de histórico.',vis:`<span class="vplb">Loop completo</span><div class="pb"><span class="hk">T1:</span> Preciso de X
+<span class="hs">A1:</span> Search[X]
+<span class="ha">O1:</span> {resultado de X}
+
+<span class="hk">T2:</span> Com X, preciso calcular Y
+<span class="hs">A2:</span> Calculator[...]
+<span class="ha">O2:</span> {resultado}
+
+<span class="hk">T3:</span> Tenho tudo que preciso
+<span class="hs">A3:</span> Finish[{resposta_final}]</div><div class="vn">T→A→O × N loops · Finish encerra · Auditável e controlável</div>`},
+]},
+{id:'rag',tab:'RAG',title:'Retrieval Augmented Generation (RAG)',sub:'Conhecimento externo dinâmico retriever + generator superam o knowledge cutoff',
+ax:'arXiv:2312.10997',pdf:'https://arxiv.org/pdf/2312.10997',
+def:'Lewis et al. (2020) propuseram RAG como solução para duas limitações fundamentais dos LLMs: <strong>knowledge cutoff</strong> (o modelo ignora dados posteriores ao pré-treinamento) e <strong>alucinação factual</strong> (o modelo "inventa" fatos quando o conhecimento é incerto). RAG resolve ambas ao recuperar documentos relevantes em <em>tempo de inferência</em> e condicionar a geração a esse contexto externo sem re-treinar o modelo ou alterar seus pesos.',
+ac:'#6bb8b4',cards:[
+{n:'01',t:'Retrieval',s:'Busca de documentos relevantes',desc:'O retriever mapeia query e documentos para um espaço vetorial e retorna os K mais próximos. Duas famílias: <strong>dense retrieval</strong> (embeddings semânticos DPR, E5, BGE) que captura significado latente; e <strong>sparse retrieval</strong> (BM25/TF-IDF) que privilegia correspondência lexical. Abordagens <strong>híbridas</strong> combinam ambos os scores via RRF (Reciprocal Rank Fusion) para robustez.',ref:{label:'Lewis et al. (2020)',note:'Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks',src:'arXiv',href:'https://arxiv.org/abs/2005.11401',pdf:'https://arxiv.org/pdf/2005.11401'},why:'A geração não compensa retrieval ruim documentos irrelevantes degradam a resposta. Recall@K e MRR medem a qualidade do retriever independentemente do gerador.',vis:`<span class="vplb">Retrieval step</span><div class="pb">Query: <span class="hv">{pergunta}</span>
+   ↓ embedding(query)
+Vector Store: [Doc1...DocN]
+   ↓ similarity search (top-K)
+Recuperados:
+  <span class="hs">Doc1:</span> {trecho_relevante_1}
+  <span class="hs">Doc2:</span> {trecho_relevante_2}</div><div class="vn">Dense (semântico) ou Sparse (BM25) · FAISS / Pinecone</div>`},
+{n:'02',t:'Augmentation',s:'Enriquecimento do prompt',desc:'Os K documentos recuperados são inseridos no prompt antes da instrução. Liu et al. (2023) <em>"Lost in the Middle"</em> demonstraram que LLMs priorizam informação no <strong>início e fim</strong> do contexto, degradando o aproveitamento de documentos posicionados no meio. A ordem e posição dos documentos são decisões de engenharia com impacto mensurável e frequentemente subestimado na precisão final.',ref:{label:'Liu et al. (2023)',note:'Lost in the Middle: How Language Models Use Long Contexts',src:'arXiv',href:'https://arxiv.org/abs/2307.03172',pdf:'https://arxiv.org/pdf/2307.03172'},why:'Posicionar documentos mais relevantes nas extremidades do contexto; limitar K para evitar diluição; incluir metadados (fonte, data) para priorização e citação correta.',vis:`<span class="vplb">Prompt aumentado</span><div class="pb"><span class="hk">[Contexto recuperado]</span>
+<span class="hs">Doc 1:</span> {trecho_1}
+<span class="hs">Doc 2:</span> {trecho_2}
+
+<span class="hk">[Instrução]</span>
+Com base nos documentos,
+responda: <span class="hv">{query}</span>
+Resposta:</div><div class="vn">Contexto antes da instrução · Posição importa · "Lost in the Middle"</div>`},
+{n:'03',t:'Generation',s:'LLM condicionado ao contexto',desc:'O LLM gera a resposta condicionada aos documentos recuperados idealmente com instrução explícita de <strong>não usar conhecimento paramétrico</strong> ("Responda apenas com base nos documentos abaixo"). Esse condicionamento reduz alucinação factual e habilita citação rastreável de fontes essencial em domínios regulados como saúde, direito e finanças, onde precisão e auditabilidade são requisitos.',ref:null,why:'Knowledge dinâmico sem re-treinamento, fontes verificáveis, menor alucinação. A qualidade é limitada pela cobertura do corpus GIGO se aplica ao retriever.',vis:`<span class="vplb">Fluxo completo RAG</span><div class="pb">Query → <span class="hs">Retriever</span> → Docs
+              ↓
+   <span class="hk">Augmented Prompt</span>
+   [Docs + Query]
+              ↓
+          <span class="hc">LLM</span>
+              ↓
+   <span class="hs">Resposta citando fontes</span></div><div class="vn">Retriever + Generator · Knowledge dinâmico · Anti-alucinação</div>`},
+{n:'04',t:'Arquitetura',s:'RAG-Sequence vs. RAG-Token',desc:'Lewis et al. (2020) propuseram duas variantes: <strong>RAG-Sequence</strong> recupera uma vez e gera a resposta completa sobre contexto fixo; <strong>RAG-Token</strong> pode recuperar documentos diferentes a cada passo de geração mais adaptável, muito mais caro. Variantes modernas estendem o paradigma: <strong>Self-RAG</strong> (Asai et al., 2023) decide dinâmicamente se e quando recuperar; <strong>HyDE</strong> gera um documento hipotético para melhorar a query antes do retrieval; <strong>RAPTOR</strong> indexa sumários hierárquicos para raciocínio multi-nível.',ref:null,why:'RAG-Sequence para a maioria dos casos (menor custo, contexto estável). RAG-Token para perguntas multi-facetadas. Self-RAG quando o corpus é heterogêneo em qualidade.',vis:`<span class="vplb">RAG-Sequence vs. RAG-Token</span><div class="pb"><span class="hs">RAG-Sequence:</span>
+  Recupera D uma vez
+  Gera resposta completa para D
+
+<span class="hk">RAG-Token:</span>
+  A cada token gerado:
+    Recupera Di mais relevante
+    Gera próximo token com Di</div><div class="vn">Sequence: rápido · Token: preciso · Self-RAG: auto-avaliação</div>`},
+]},
+{id:'pm',tab:'Maiêutico',title:'Prompt Maiêutico',sub:'Árvore recursiva de "porquês" verificação de consistência supera CoT linear',
+ax:'arXiv:2205.11822',pdf:'https://arxiv.org/pdf/2205.11822',
+def:'Jung et al. (2022) propuseram Maieutic Prompting como alternativa ao CoT linear para tarefas que exigem <strong>consistência lógica profunda</strong>. Inspirado na maiêutica socrática a arte de extrair verdade pelo questionamento o método constrói uma <strong>árvore recursiva de "porquês"</strong>: cada justificativa gera sub-afirmações verificadas independentemente. Contradições na árvore revelam inconsistências que CoT ignora por ser linear e não controlar se premissas intermediárias são mutuamente consistentes.',
+ac:'#85C1E9',cards:[
+{n:'01',t:'Afirmação Inicial',s:'Crença que será verificada',desc:'O processo começa com uma <strong>tese declarativa forte</strong> que o modelo avalia como Verdadeiro/Falso e justifica em uma frase. Essa avaliação ancora o nó-raiz da árvore mesmo que provisória, ela dirige todo o questionamento subsequente. A qualidade da tese inicial determina a riqueza dos ramos: teses vagas geram sub-afirmações vagas; teses precisas e binárias geram ramos testáveis.',ref:null,why:'Diagnósticos técnicos, análise de premissas de modelos ML, avaliação de hipóteses. Reformule afirmações ambíguas como proposições binárias a tese de entrada determina a utilidade de toda a árvore.',vis:`<span class="vplb">Afirmação inicial</span><div class="pb">Afirmação: <span class="hv">{declaracao}</span>
+
+Esta afirmação é verdadeira?
+Responda <span class="hs">Sim</span> ou <span class="ha">Não</span>.
+Justifique em 1 frase.
+
+Resposta: [Sim/Não]
+Justificativa:</div><div class="vn">Ponto de entrada da árvore maiêutica</div>`},
+{n:'02',t:'Questionamento Socrático',s:'Decomposição em sub-justificativas',desc:'Para cada justificativa J da afirmação A, o modelo responde: <strong>"Por que J é verdade?"</strong> gerando sub-afirmações A1, A2... verificadas independentemente. O processo se repete até atingir <strong>afirmações atômicas</strong> sem mais expansão útil. Cada nível de recursão aumenta a granularidade e a probabilidade de revelar premissas tácitas contraditórias que permaneceriam ocultas num CoT linear.',ref:null,why:'Recomendado 2–3 níveis mais profundo amplia cobertura mas aumenta custo e risco de desvio. Calibre conforme a complexidade da tese.',vis:`<span class="vplb">Decomposição maiêutica</span><div class="pb">Afirmação: <span class="hv">{A}</span>
+  Justificativa: <span class="hs">{J}</span>
+    Por quê <span class="hs">{J}</span> é verdade?
+      Sub-afirmação: <span class="hc">{A1}</span>
+        Justificativa: <span class="hs">{J1}</span>
+      Sub-afirmação: <span class="hc">{A2}</span>
+        Justificativa: <span class="hs">{J2}</span></div><div class="vn">Recursão até profundidade configurável</div>`},
+{n:'03',t:'Árvore de Explicações',s:'Hierarquia auditável de raciocínio',desc:'O questionamento recursivo constrói uma <strong>árvore dirigida</strong>: nó-raiz é a tese principal, nós internos são sub-afirmações justificantes, folhas são afirmações atômicas avaliáveis. A estrutura torna explícitas as <strong>dependências lógicas</strong> uma folha Falsa invalida todos os seus ancestrais, propagando revisões de baixo para cima (bottom-up). Isso externaliza o esqueleto lógico do argumento de forma visível.',ref:null,why:'A árvore mostra quais premissas sustentam quais conclusões facilita auditoria e identifica pontos exatos de falha. Raciocínio comunicável para stakeholders não-técnicos.',vis:`<span class="vplb">Estrutura da árvore</span><div class="pb"><span class="hv">Afirmação raiz (A)</span>
+├── <span class="hs">Sub-afirmação A1</span> [Verdadeiro]
+│   ├── <span class="hc">A1.1</span> [Verdadeiro]
+│   └── <span class="hc">A1.2</span> [Verdadeiro]
+└── <span class="hs">Sub-afirmação A2</span>
+    ├── <span class="ha">A2.1</span> [Falso] ← inconsistência
+    └── <span class="hc">A2.2</span> [Verdadeiro]</div><div class="vn">Auditável · Interpretável · Inconsistências visíveis</div>`},
+{n:'04',t:'Verificação de Consistência',s:'Eliminar crenças contraditórias',desc:'A árvore é avaliada <strong>bottom-up</strong>: folhas são classificadas como Verdadeiro/Falso, e cada nó-pai é revisado pelos filhos via <strong>votação lógica por maioria</strong> mais filhos Verdadeiros confirmam o pai; mais Falsos o revisam ou descartam. Esse mecanismo de propagação elimina crenças contraditórias que coexistiriam sem conflito em um raciocínio linear como CoT.',ref:null,why:'CoT pode chegar a conclusões coerentes a partir de premissas contraditórias Maieutic detecta isso estruturalmente. Custo cresce com largura × profundidade da árvore mesma dinâmica do ToT.',vis:`<span class="vplb">Resolução de inconsistências</span><div class="pb">A = Verdadeiro?
+  A1 = <span class="hs">Verdadeiro</span> ✓
+  A2 = <span class="ha">Falso</span>      ✗
+
+<span class="hk">Regra de maioria:</span>
+  N_verdadeiro > N_falso?
+  <span class="hs">Sim</span> → A = Verdadeiro
+  <span class="ha">Não</span> → A = Falso (revisado)</div><div class="vn">Votação lógica · Consistência pela estrutura da árvore</div>`},
+]},
+{id:'ed',tab:'Direcional',title:'Estímulo Direcional',sub:'Política LM pequena guia LLM congelado sem tocar nos pesos',
+ax:'arXiv:2302.11520',pdf:'https://arxiv.org/pdf/2302.11520',
+def:'Li et al. (2023) propuseram DSP para cenários em que <strong>fine-tuning do LLM base é inviável</strong> custo proibitivo, acesso API-only ou requisitos de compliance. Uma <strong>política LM pequena e treinável</strong> aprende a gerar estímulos direcionais (hints) que, concatenados ao input, redirecionam o output do LLM congelado sem modificar seus pesos. A política é otimizada via RL (Reinforcement Learning) usando a qualidade do output do LLM como sinal de recompensa um paradigma de <em>aprendizado indireto</em> que separa quem direciona de quem responde.',
+ac:'#85C1E9',cards:[
+{n:'01',t:'Política LM',s:'Modelo pequeno e treinável via RL (Reinforcement Learning)',desc:'A política é um <strong>LM auxiliar de pequeno porte</strong> (tipicamente GPT-2 ou T5 small) treinado via RL para gerar hints que maximizam a qualidade do output do LLM base. A separação arquitetural é intencional: a política aprende <em>o que direcionar</em>, não <em>como responder</em> e o LLM grande permanece congelado, compatível com qualquer API black-box sem acesso a gradientes.',ref:null,why:'Treinar apenas a política (dezenas de M) em vez do LLM (dezenas de B) reduz custo por ordens de magnitude. Compatível com GPT-4, Claude, Gemini qualquer LLM via API.',vis:`<span class="vplb">Arquitetura</span><div class="pb"><span class="hs">Política LM (pequena, treinável)</span>
+Input: <span class="hv">{texto}</span>
+    ↓ gera
+Estímulo: <span class="ha">[hint direcional]</span>
+
+<span class="hk">LLM (grande, congelado)</span>
+Prompt = <span class="hv">{texto}</span> + <span class="ha">{estímulo}</span>
+Output: {resposta guiada}</div><div class="vn">Política via RLHF · LLM intacto · Black-box compatível</div>`},
+{n:'02',t:'Geração do Estímulo',s:'Hints específicos por input',desc:'A política gera um estímulo <strong>específico para cada input</strong> não é um prefixo fixo. O estímulo pode assumir formas diversas: palavras-chave de foco, restrições de tom, frases de contexto implícito ou instruções de estrutura. Li et al. demonstraram que o formato do estímulo é um hiperparâmetro crítico hints em keyword funcionam melhor para sumarização; hints de instrução para diálogo orientado.',ref:null,why:'Cada texto recebe o estímulo mais eficaz ao contrário de system prompts fixos. A política requer pares (input, output) para aprender dados anotados continuam necessários.',vis:`<span class="vplb">Prompt com estímulo</span><div class="pb">Sumarize o texto.
+<span class="ha">Foque em: [keywords geradas pela política]</span>
+
+Text: <span class="hv">{documento}</span>
+Summary:</div><div class="vn">Hint dinâmico · Gerado para cada input · Não fixo</div>`},
+{n:'03',t:'Integração',s:'Concatenação ao prompt original',desc:'O estímulo gerado é <strong>concatenado ao prompt original</strong> antes do envio ao LLM. Li et al. testaram três posições de inserção: antes da instrução, entre instrução e input, e após o input a posição ótima depende da tarefa. Para sumarização, inserir o hint após a instrução e antes do documento produziu os melhores resultados nos experimentos do paper.',ref:null,why:'Sumarização orientada, diálogo com restrições, geração controlada com LLMs black-box. A concatenação é a única modificação ao pipeline integrável sem refatoração.',vis:`<span class="vplb">Composição do prompt final</span><div class="pb"><span class="hk">[Instrução original]</span>
+Sumarize o seguinte texto.
+
+<span class="ha">[Estímulo da política]</span>
+Foque em: eficiência, custo, impacto.
+
+<span class="hv">[Input]</span>
+Text: {documento}</div><div class="vn">Concatenação simples · Compatível com qualquer LLM via API</div>`},
+{n:'04',t:'Refinamento via RL',s:'Loop de treino da política',desc:'A política é otimizada num loop de <strong>reinforcement learning</strong>: (1) política gera estímulo; (2) LLM congelado produz output; (3) métrica de qualidade (ROUGE, BERTScore ou critério de domínio) gera recompensa; (4) política atualizada via policy gradient. O LLM <em>nunca</em> recebe gradientes apenas a política os usa. Adaptar DSP a uma nova tarefa requer apenas re-treinar a política com novos dados de recompensa.',ref:null,why:'Custo de adaptação equivale ao treino da política não ao fine-tuning do LLM. A política pode aprender hints que maximizam métricas sem melhorar qualidade real diversifique recompensas e inclua avaliação humana.',vis:`<span class="vplb">Loop de treinamento</span><div class="pb"><span class="hs">1.</span> Política gera estímulo
+<span class="hs">2.</span> LLM produz output
+<span class="hs">3.</span> Métrica avalia qualidade
+   → ROUGE / BERTScore
+<span class="hs">4.</span> Política atualizada via RL (Reinforcement Learning)
+<span class="hs">5.</span> Repetir até convergir</div><div class="vn">RL loop · Apenas política treinada · LLM sem acesso a gradientes</div>`},
+]},
+{id:'sot',tab:'SoT',title:'Skeleton-of-Thought (SoT)',sub:'Decomposição + expansão paralela reduz latência até 2.39× sem perda de qualidade',
+ax:'arXiv:2307.15337',pdf:'https://arxiv.org/pdf/2307.15337',
+def:'Ning et al. (2023) propuseram SoT como solução para o gargalo fundamental dos LLMs: a <strong>geração sequencial token-a-token</strong> impõe latência linear com o tamanho da resposta. SoT quebra essa dependência dividindo a geração em duas fases: (1) <strong>esqueleto</strong> o LLM produz apenas os pontos principais em uma passagem rápida; (2) <strong>expansão paralela</strong> cada ponto expandido em chamadas simultâneas e independentes. A latência converge para max(t_expansões) em vez de Σ(t_expansões), com redução documentada de até 2.39× em GPT-4 e Claude.',
+ac:'#4a95b8',cards:[
+{n:'01',t:'Fase do Esqueleto',s:'Apenas os pontos principais',desc:'O LLM recebe instrução explícita para <strong>não responder ainda</strong> e gerar apenas os pontos principais numerados sem desenvolver o conteúdo. Esse passo é rápido por produzir tokens em quantidade mínima, e o esqueleto resultante funciona como <strong>plano estrutural compartilhado</strong> entre todas as expansões paralelas. A qualidade do esqueleto determina a cobertura e organização da resposta final.',ref:null,why:'Custo marginal baixo que habilita o ganho de latência da fase paralela. Instrua o LLM a gerar pontos independentes dependências sequenciais inviabilizam a paralelização.',vis:`<span class="vplb">Prompt fase esqueleto</span><div class="pb"><span class="hk">[Instrução do esqueleto]</span>
+Não responda ainda. Gere apenas
+os pontos principais numerados.
+
+Questão: <span class="hv">{pergunta}</span>
+Esqueleto:</div><div class="vn">Saída: lista de pontos · Sem conteúdo · Rápido</div>`},
+{n:'02',t:'Expansão dos Pontos',s:'Cada ponto expandido separadamente',desc:'Cada ponto do esqueleto vira um <strong>prompt independente de expansão</strong> com dois componentes de contexto: (1) a questão original; (2) o esqueleto completo como âncora estrutural garantindo coerência com o conjunto sem que as expansões se vejam entre si. Ning et al. recomendam 2–3 frases por ponto para balancear profundidade e custo de inferência.',ref:null,why:'O esqueleto compartilhado sincroniza as expansões sem comunicação entre elas. Pontos amplos geram expansões longas que diluem o ganho calibre para pontos focados e independentes.',vis:`<span class="vplb">Prompt expansão</span><div class="pb">Questão: <span class="hv">{pergunta}</span>
+Esqueleto: <span class="hs">[1. X  2. Y  3. Z]</span>
+
+<span class="hk">[Instrução de expansão]</span>
+Expanda o ponto <span class="hs">{n}</span>, 2-3 frases.
+
+Ponto {n}: <span class="hs">{título}</span>
+Expansão:</div><div class="vn">Um prompt por ponto · Contexto compartilhado do esqueleto</div>`},
+{n:'03',t:'Paralelização',s:'Expansões simultâneas',desc:'Os N prompts de expansão são disparados <strong>simultaneamente</strong> via chamadas paralelas à API. A latência total converge para max(t₁, t₂, ..., tₙ) em vez de Σtᵢ o ganho cresce com N e com o tamanho de cada expansão. Ning et al. mediram redução de até 2.39× no tempo de resposta em GPT-4, com qualidade equivalente ao baseline sequencial em 9 de 12 categorias testadas.',ref:null,why:'Chamadas paralelas exigem asyncio ou ThreadPoolExecutor. SoT não reduz tokens custo equivalente ao sequencial. O ganho é exclusivamente de latência percebida.',vis:`<span class="vplb">Execução paralela</span><div class="pb"><span class="hs">Expansão 1</span> ────┐
+<span class="hs">Expansão 2</span> ────┤ → <span class="hk">Merge</span>
+<span class="hs">Expansão 3</span> ────┘   → Resposta final
+
+<span class="ha">Sequential:</span> t1 + t2 + t3
+<span class="hk">Parallel:</span>   max(t1, t2, t3)</div><div class="vn">Redução de latência · Chamadas paralelas · Merge simples</div>`},
+{n:'04',t:'Router SoT',s:'Quando aplicar SoT vs. normal',desc:'Ning et al. introduziram <strong>SoT-R</strong>: um router LLM que decide automaticamente entre SoT e geração normal. Perguntas factuais curtas, respostas com lógica sequencialmente encadeada (código, matemática) e narrativas onde a coesão depende da ordem de geração têm overhead inútil com SoT o router evita aplicar a técnica onde o ganho de latência não supera o custo da fase de esqueleto.',ref:null,why:'Respostas longas com pontos independentes listas, comparações, tutoriais multi-aspecto. Evitar em respostas curtas, código encadeado, matemática sequencial e narrativas onde coesão depende da ordem.',vis:`<span class="vplb">Router de decisão</span><div class="pb">Questão: <span class="hv">{pergunta}</span>
+
+<span class="hk">Router avalia:</span>
+Resposta longa com pontos
+independentes?
+
+<span class="hs">Sim</span> → SoT (2 fases paralelas)
+<span class="ha">Não</span> → Resposta normal (1 fase)</div><div class="vn">SoT-R · GPT-4 como router · Decisão automática</div>`},
+]},
+{id:'gk',tab:'Gen. Knowledge',title:'Generated Knowledge Prompting',sub:'Externalizar conhecimento latente antes da inferência reduz erros de senso comum',
+ax:'arXiv:2110.08387',pdf:'https://arxiv.org/pdf/2110.08387',
+def:'Liu et al. (2021) propuseram Generated Knowledge Prompting como alternativa ao fine-tuning para raciocínio de senso comum: em vez de atualizar pesos, o método obriga o modelo a <strong>externalizar conhecimento latente</strong> antes de responder. A hipótese central: LLMs possuem conhecimento implícito relevante mas não o ativam consistentemente na inferência direta gerá-lo explicitamente funciona como <em>mecanismo de ativação</em>, reduzindo erros em +8–15% em benchmarks como NumerSense e CommonsenseQA sem qualquer fine-tuning.',
+ac:'#29AA9F',cards:[
+{n:'01',t:'Geração de Conhecimento',s:'Primeiro gerar, depois responder',desc:'A primeira chamada instrui o LLM a agir como <strong>base de conhecimento ativa</strong>: gerar N declarações factuais relevantes definições, relações causais, dados quantitativos, exemplos antes de qualquer resposta. O ponto-chave de Liu et al.: o modelo <em>já possui</em> esse conhecimento parametricamente, mas a geração explícita o torna acessível ao raciocínio subsequente em vez de deixá-lo implicitamente enterrado nos pesos.',ref:null,why:'Ativa conhecimento latente sem fine-tuning ou retriever externo. Solicitar em categorias explícitas (definição, relações, exemplos, dados) produz declarações mais diversas que um pedido genérico.',vis:`<span class="vplb">Prompt geração de conhecimento</span><div class="pb">Gere 5 fatos relevantes sobre:
+<span class="hv">{tópico}</span>
+
+Inclua: definições, relações,
+exemplos e dados quantitativos.
+
+Conhecimento:</div><div class="vn">Step 1: gerar · Step 2: usar na inferência · Sem fine-tuning</div>`},
+{n:'02',t:'Integração',s:'Conhecimento no prompt de inferência',desc:'O conhecimento gerado na fase 1 é inserido no prompt de inferência <strong>antes da questão</strong>, funcionando como contexto explícito ancorado. Liu et al. testaram três estratégias de integração: concatenação direta, seleção por relevância prévia e weighted inference com múltiplos conhecimentos a concatenação direta com filtragem prévia produziu os melhores resultados nos benchmarks.',ref:null,why:'Duas chamadas por questão compensa em tarefas de alta precisão. Gere conhecimento uma vez e reutilize via cache para múltiplas questões do mesmo tópico.',vis:`<span class="vplb">Prompt inferência com conhecimento</span><div class="pb"><span class="hk">[Conhecimento gerado]</span>
+{fato_1}
+{fato_2}
+{fato_3}
+
+<span class="hs">Com base no conhecimento acima,</span>
+responda:
+<span class="hv">{pergunta}</span>
+Resposta:</div><div class="vn">Conhecimento antes da questão · Contexto enriquecido</div>`},
+{n:'03',t:'Inferência Final',s:'Resposta apoiada em conhecimento',desc:'A resposta é condicionada ao conhecimento com instrução explícita de ancoragem ("Com base no conhecimento acima, responda"). O mecanismo reduz alucinação porque o LLM recebe o contexto correto em vez de depender de recuperação implícita de memória paramétrica que pode ser inexata ou ativada inconsistentemente. Liu et al. reportaram +8–15% de precisão em NumerSense vs. baseline direto.',ref:null,why:'Senso comum, física intuitiva, causalidade, domínios com conhecimento especializado não ativado espontaneamente. Diferença vs. RAG: o conhecimento é gerado pelo LLM sem retriever e sem corpus externo.',vis:`<span class="vplb">Fluxo completo</span><div class="pb"><span class="hs">1.</span> Questão → <span class="hk">LLM</span> → Conhecimento
+<span class="hs">2.</span> [Questão + Conhecimento]
+         → <span class="hk">LLM</span> → Resposta final
+
+<span class="ha">Sem geração:</span> erro mais provável
+<span class="hk">Com geração:</span> precisão +8–15%</div><div class="vn">Duas chamadas · Menor alucinação · Melhor raciocínio factual</div>`},
+{n:'04',t:'Seleção de Conhecimento',s:'Filtrar declarações contraditórias',desc:'Liu et al. propuseram gerar N=5–10 declarações e selecionar as mais úteis antes da inferência. Três estratégias de seleção: (1) <strong>score semântico</strong> similaridade embedding entre declaração e questão; (2) <strong>log-probabilidade condicional</strong> do LLM para ranquear plausibilidade; (3) <strong>LLM curador</strong> que filtra declarações contraditórias ou de baixa utilidade o mais flexível, com custo de uma chamada adicional.',ref:null,why:'LLMs podem gerar conhecimento impreciso a seleção filtra ruído antes da inferência. LLM curador adiciona uma terceira chamada score semântico via embedding é alternativa mais barata para produção.',vis:`<span class="vplb">Seleção de conhecimento</span><div class="pb">Gerados: <span class="hv">K1, K2, K3, K4, K5</span>
+
+Relevância para <span class="hv">{q}</span>:
+<span class="hs">K2</span>: 0.92 ✓
+<span class="hs">K4</span>: 0.87 ✓
+<span class="ha">K1, K3, K5</span>: descartados
+
+Usar K2, K4 na inferência</div><div class="vn">Score por probabilidade ou semântica · Filtragem de ruído</div>`},
+]},
+{id:'pal',tab:'PAL',title:'PAL Program-Aided Language Models',sub:'LLM raciocina, interpretador computa: separação de responsabilidades elimina erros aritméticos',
+ax:'arXiv:2211.10435',pdf:'https://arxiv.org/pdf/2211.10435',
+def:'Gao et al. (2022) partem de uma observação empírica fundamental: <strong>LLMs cometem erros aritméticos sistematicamente</strong>, mesmo com CoT porque raciocínio textual e cálculo numérico competem no mesmo espaço de geração token-a-token. PAL resolve essa tensão por <strong>separação de responsabilidades</strong>: o LLM gera código Python como raciocínio intermediário (o que faz bem) e delega o cálculo a um interpretador determinístico externo (que nunca erra aritmética). O resultado do programa é a resposta final sem ambiguidade e sem erro de arredondamento.',
+ac:'#29AA9F',cards:[
+{n:'01',t:'Problema em NL',s:'Enunciado em linguagem natural',desc:'Via few-shot, o LLM aprende que a resposta esperada é uma <strong>função Python</strong> não texto nem cálculo direto. Os exemplos ensinam o mapeamento: cada variável do enunciado vira variável nomeada no código, cada operação semântica vira uma linha Python, a função retorna a resposta. O padrão aprendido é o mecanismo central do PAL sem ele, o modelo volta a gerar texto.',ref:null,why:'Toda responsabilidade computacional sai do LLM o interpretador é exato. Os exemplos few-shot devem cobrir os tipos de operação esperados soma não ensina condicionais ou iterações.',vis:`<span class="vplb">Prompt few-shot PAL</span><div class="pb"><span class="hs">[Exemplo]</span>
+P: João tem 5 maçãs. Compra 3
+   pacotes de 4. Dá 2. Quantas?
+
+<span class="hk">def solution():
+    macas = 5 + 3*4
+    return macas - 2</span>
+
+P: <span class="hv">{problema}</span></div><div class="vn">Few-shot para induzir geração de código · Enunciado → programa</div>`},
+{n:'02',t:'Geração de Código',s:'Python como raciocínio estruturado',desc:'O LLM gera um programa Python em que cada linha é um <strong>passo de raciocínio</strong> com variáveis semanticamente nomeadas (preco_unit, desconto_pct). O código PAL é simultaneamente o raciocínio intermediário do modelo <em>e</em> a especificação formal da computação interpretável e verificável de formas que texto puro nunca é. Essa dupla natureza é a propriedade mais valiosa de PAL.',ref:null,why:'Variáveis bem nomeadas permitem verificar se o modelo entendeu antes de executar. LLM pode gerar código sintaticamente correto com lógica errada revise os primeiros exemplos por domínio.',vis:`<span class="vplb">Código gerado pelo LLM</span><div class="pb"><span class="hk">def solution():
+    preco_unit = 12.50
+    quantidade = 8
+    desconto_pct = 0.15
+    
+    subtotal = preco_unit * quantidade
+    desconto = subtotal * desconto_pct
+    total = subtotal - desconto
+    return total</span></div><div class="vn">Código legível · Auditável · LLM pensa, Python calcula</div>`},
+{n:'03',t:'Execução',s:'Interpretador Python como oráculo',desc:'O código é executado em um <strong>interpretador Python isolado (sandbox)</strong> nunca inline, por segurança. O resultado é determinístico e exato, eliminando os erros de cálculo do espaço de tokens. Gao et al. demonstraram que PAL supera CoT em 13 benchmarks de raciocínio matemático incluindo GSM8K, SVAMP e MathQA com ganhos mais expressivos quanto maior a complexidade computacional do problema.',ref:null,why:'2+2=4 sempre no interpretador determinismo absoluto. Nunca execute código LLM-gerado sem sandbox RestrictedPython, subprocess com timeout ou containers previnem execução maliciosa.',vis:`<span class="vplb">Pipeline PAL</span><div class="pb"><span class="hv">Problema NL</span>
+  ↓ LLM gera
+<span class="hk">código Python</span>
+  ↓ exec()
+<span class="hs">resultado = 85.0</span>  ← exato
+
+<span class="ha">vs. CoT puro:</span>
+  ↓ LLM raciocina em texto
+  "... logo é 85.3" ← erro possível</div><div class="vn">exec() ou sandbox · Exatidão computacional · Sem erros aritméticos</div>`},
+{n:'04',t:'Quando usar PAL',s:'PAL vs. CoT por tipo de tarefa',desc:'Gao et al. e estudos subsequentes estabeleceram uma divisão empírica clara: PAL domina em tarefas com <strong>aritmética, datas, contagens e lógica simbólica</strong> onde o interpretador elimina a fonte de erro. CoT domina em <strong>senso comum, inferência textual e raciocínio moral</strong> onde não há computação determinística. A combinação híbrida planejar em linguagem natural (CoT) e calcular em Python (PAL) maximiza as vantagens de ambos.',ref:null,why:'Finanças (FinQA), ciência de dados, análise quantitativa, matemática multi-etapa. Evitar em raciocínio textual, senso comum, tarefas criativas. Se o problema não tem resposta computável, PAL não supera CoT.',vis:`<span class="vplb">PAL vs. CoT por tarefa</span><div class="pb"><span class="hk">PAL superior:</span>
+  <span class="hs">✓</span> Aritmética (GSM8K, SVAMP)
+  <span class="hs">✓</span> Finanças (FinQA)
+  <span class="hs">✓</span> Datas e listas
+
+<span class="ha">CoT superior:</span>
+  <span class="ha">✓</span> Senso comum
+  <span class="ha">✓</span> Inferência textual
+  <span class="ha">✓</span> Sem output numérico</div><div class="vn">PAL + CoT complementares · MathQA · FinQA · SVAMP</div>`},
+]},
+];
+
+let st={tab:0,card:null};
+let ovs={};
+let refvs={};
+
+function renderTabs(){
+  document.getElementById('TB').innerHTML=T.map((t,i)=>`<div class="tab ${st.tab===i?'on':''}" onclick="setTab(${i})">${t.tab}</div>`).join('');
+}
+
+function loadOv(tid,pdf,title){
+  const el=document.getElementById('ov-'+tid);
+  const btn=document.getElementById('btn-'+tid);
+  if(!el)return;
+  
+  if(!ovs[tid]){
+    ovs[tid]={state:'visible', html:`<iframe src="${pdf}" width="100%" height="100%" style="border:none; border-radius:7px;"></iframe>`};
+    el.style.padding='0';
+    el.style.height='500px';
+    el.innerHTML=ovs[tid].html;
+    el.style.display='block';
+    if(btn)btn.textContent='Ocultar';
+  } else if(ovs[tid].state==='visible'){
+    ovs[tid].state='hidden';
+    el.style.display='none';
+    if(btn)btn.textContent='Abrir';
+  } else {
+    ovs[tid].state='visible';
+    el.style.display='block';
+    if(btn)btn.textContent='Ocultar';
+  }
+}
+
+function toggleRef(rid,pdf){
+  const el=document.getElementById('drv-'+rid);
+  const btn=document.getElementById('rbtn-'+rid);
+  if(!el)return;
+
+  if(!refvs[rid]){
+    refvs[rid]={state:'visible',html:`<iframe src="${pdf}" width="100%" height="100%" style="border:none; border-radius:7px;"></iframe>`};
+    el.style.padding='0';
+    el.style.height='360px';
+    el.innerHTML=refvs[rid].html;
+    el.style.display='block';
+    if(btn)btn.textContent='Ocultar';
+  } else if(refvs[rid].state==='visible'){
+    refvs[rid].state='hidden';
+    el.style.display='none';
+    if(btn)btn.textContent='Abrir';
+  } else {
+    refvs[rid].state='visible';
+    el.style.display='block';
+    if(btn)btn.textContent='Ocultar';
+  }
+}
+
+function renderCardRef(t,c,idx){
+  if(!c.ref)return '';
+  const rid=`${t.id}-${idx}`;
+  const rv=refvs[rid];
+  const isVisible=rv && rv.state==='visible';
+  const cached=rv ? rv.html : '';
+  const btnText=!rv ? 'Abrir' : (isVisible ? 'Ocultar' : 'Abrir');
+  const shortHref=c.ref.href.replace('https://','');
+
+  return `<div class="dpac"><strong>Ref:</strong> <span class="rfl">${c.ref.label}</span> - ${c.ref.note}<div class="rft"><span class="ril"><span class="ril-b">${c.ref.src}</span><a class="ril-a" href="${c.ref.href}" target="_blank" rel="noopener noreferrer">${shortHref}</a><button class="ril-btn" id="rbtn-${rid}" onclick="toggleRef('${rid}','${c.ref.pdf}')">${btnText}</button></span></div></div><div class="drv" id="drv-${rid}" style="display:${isVisible?'block':'none'};${rv?'padding:0;height:360px;':''}">${cached}</div>`;
+}
+
+function renderContent(){
+  const t=T[st.tab];
+  const ph=`<div class="dpp"><div class="dppl"></div>Selecione um card acima para ver detalhes e o prompt anotado</div>`;
+  let det=ph;
+  if(st.card!==null){
+    const c=t.cards[st.card];
+    det=`<div><div class="dph"><div class="dpm" style="background:${t.ac}"></div><div><p class="dpt">${c.t}</p><p class="dps">${t.title} · Padrão ${c.n}</p></div></div><p class="dpd">${c.desc}</p>${renderCardRef(t,c,st.card)}<p class="dpw">${c.why}</p></div><div class="vp">${c.vis}</div>`;
+  }
+  const ovState=ovs[t.id];
+  const isVisible=ovState && ovState.state==='visible';
+  const cached=ovState ? ovState.html : '';
+  const btnText=!ovState ? 'Abrir' : (isVisible ? 'Ocultar' : 'Abrir');
+  
+  document.getElementById('TC').innerHTML=`
+<div class="th"><h2>${t.title}</h2><p>${t.sub}</p>
+<div class="tdef">${t.def}</div>
+<div class="axrow">
+<span class="ril"><span class="ril-b">${t.ax}</span><a class="ril-a" href="${t.pdf}" target="_blank">${t.pdf.replace('https://','').substring(0,50)}${t.pdf.length>55?'...':''}</a><button class="ril-btn" id="btn-${t.id}" onclick="loadOv('${t.id}','${t.pdf}','${t.title.replace(/'/g,"&#39;")}')">${btnText}</button></span>
+</div>
+<div class="ovp" id="ov-${t.id}" style="display:${isVisible?'block':'none'};${ovState?'padding:0;height:500px;':''}">${cached}</div>
+</div>
+<div class="cg">${t.cards.map((c,i)=>`<div class="cc ${st.card===i?'on':''}" style="--ac:${t.ac}" onclick="setCard(${i})"><span class="cn">${c.n}</span><p class="ct">${c.t}</p><p class="cs">${c.s}</p></div>`).join('')}</div>
+<div class="dp">${det}</div>`;
+}
+
+function setTab(i){st.tab=i;st.card=null;renderTabs();renderContent();}
+function setCard(i){st.card=st.card===i?null:i;renderContent();}
+
+renderTabs();renderContent();
+</script>
