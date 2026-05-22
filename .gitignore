@@ -1,5 +1,28 @@
 _git_backups/
 .vscode/
+**/.vscode/
+
+# Local environment files
+.env
+**/.env
+
+# Python cache artifacts
+__pycache__/
+**/__pycache__/
+*.py[cod]
 
 # Local Python virtual environment
 aprendizado_de_maquina/aula01_introducao_aprendizado_maquina/.venv/
+
+# Large local datasets
+PYAI/aula07/crag_task_1_and_2_dev_v4.jsonl.bz2
+
+# Local lesson data artifacts
+DSLLM/aula02/lessons/*/data/
+PYAI/aula07/data/
+PYAI/aula07/*.csv
+PYAI/aula07/*.xls
+PYAI/aula07/*.xlsx
+PYAI/aula07/*.jsonl
+PYAI/aula07/*.jsonl.*
+PYAI/aula07/*.parquet
