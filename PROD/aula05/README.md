@@ -1,4 +1,4 @@
-# Chatbot NVIDIA com Streamlit
+# Chatbot NVIDIA com Streamlit e Chatlas
 
 > Relatório da atividade prática da disciplina **Produtos de GenAI**.
 
@@ -8,17 +8,17 @@ Preencha os campos abaixo antes da entrega ou publicação:
 
 | Item | Informação |
 | --- | --- |
-| Link público da aplicação | `<preencher>` |
-| Repositório GitHub | `<preencher>` |
-| IP público da VM | `<preencher>` |
-| Sistema operacional | `<preencher>` |
-| Shape da VM | `<preencher>` |
-| Quantidade de OCPUs | `<preencher>` |
-| Memória | `<preencher>` |
+| Link público da aplicação | `http://168.138.227.189:8501` |
+| Repositório GitHub | `https://github.com/marcocanedo2001/ufpr` |
+| IP público da VM | `168.138.227.189` |
+| Sistema operacional | `Ubuntu 24.04.4 LTS` |
+| Shape da VM | `VM.Standard.A2.Flex` |
+| Quantidade de OCPUs | `8` |
+| Memória | `64 GB` |
 
 ## Introdução
 
-Modelos de linguagem podem ser incorporados a produtos digitais por meio de APIs, permitindo criar experiências conversacionais sem manter toda a infraestrutura de inferência localmente. Nesta atividade, foi construído um chatbot web que integra uma interface em Streamlit a um modelo disponibilizado pela NVIDIA.
+Modelos de linguagem podem ser incorporados a produtos digitais por meio de APIs, permitindo criar experiências conversacionais sem manter toda a infraestrutura de inferência localmente. Nesta atividade, foi construído um chatbot web que integra uma interface em Streamlit a um modelo disponibilizado pela NVIDIA por meio do Chatlas.
 
 O projeto demonstra, de forma simples e reproduzível, o fluxo completo entre a mensagem enviada pelo usuário, a chamada ao endpoint de inferência e a apresentação progressiva da resposta.
 
@@ -28,23 +28,23 @@ O objetivo foi desenvolver e preparar para implantação um produto mínimo de I
 
 - receber mensagens em uma interface web;
 - preservar o contexto durante a sessão;
-- consumir a API NVIDIA NIM por meio de uma interface compatível com OpenAI;
+- consumir a API NVIDIA NIM por meio do Chatlas em uma interface compatível com OpenAI;
 - exibir as respostas do modelo em streaming;
 - manter credenciais fora do código-fonte.
 
 ## Visão geral da solução
 
-A aplicação utiliza o Streamlit para construir a interface de chat. Cada mensagem é armazenada em `st.session_state` e o histórico completo da sessão é enviado ao modelo, preservando o contexto da conversa.
+A aplicação utiliza o Streamlit para construir a interface de chat. Os turnos da conversa são armazenados em `st.session_state`, e o histórico completo da sessão é reconstruído a cada rerun para preservar o contexto da conversa.
 
-O pacote `openai` funciona como cliente da API, configurado com a URL base da NVIDIA. O `python-dotenv` carrega as configurações locais do arquivo `.env`. A resposta é recebida em partes e exibida à medida que os tokens chegam.
+O Chatlas funciona como camada conversacional e é configurado com a URL base da NVIDIA. O `python-dotenv` carrega as configurações locais do arquivo `.env`. A resposta é recebida em partes e exibida à medida que os tokens chegam.
 
 Fluxo simplificado:
 
 1. o usuário digita uma mensagem;
-2. a aplicação adiciona a mensagem ao histórico;
-3. o cliente envia o histórico ao endpoint NVIDIA NIM;
+2. a aplicação carrega os turnos anteriores da sessão;
+3. o Chatlas envia o histórico ao endpoint NVIDIA NIM;
 4. a resposta é exibida progressivamente;
-5. a resposta final é adicionada ao histórico da sessão.
+5. os turnos atualizados são salvos de volta em `st.session_state`.
 
 ## Infraestrutura
 
@@ -66,7 +66,7 @@ O nome do modelo é configurável pela variável `NVIDIA_MODEL`, o que permite t
 
 ## Desenvolvimento
 
-A interface usa `st.chat_message` para apresentar cada turno e `st.chat_input` para receber novas mensagens. O histórico fica em `st.session_state`, permanecendo disponível enquanto a sessão do navegador estiver ativa.
+A interface usa `st.chat_message` para apresentar cada turno e `st.chat_input` para receber novas mensagens. O histórico fica em `st.session_state`, permanecendo disponível enquanto a sessão do navegador estiver ativa. A implementação cria um `ChatOpenAICompletions`, reaproveita `get_turns()` e `set_turns()` e faz streaming da resposta diretamente para a interface.
 
 As configurações são lidas das seguintes variáveis de ambiente:
 
@@ -80,17 +80,19 @@ O arquivo `.env` não é versionado. O repositório contém apenas `.env.example
 
 A aplicação pode ser executada em qualquer ambiente com Python e acesso ao endpoint da NVIDIA. Para esta atividade, a opção sugerida é uma VM Oracle Cloud com Linux. O script `scripts/run.sh` inicia o Streamlit aceitando conexões externas no endereço `0.0.0.0`.
 
+Para manter a aplicação disponível após logout ou reinicialização da máquina, a VM usada neste projeto foi configurada com um serviço `systemd` dedicado. Ele aponta para o ambiente virtual do projeto, carrega o arquivo `.env` e reinicia automaticamente em caso de falha.
+
 Em uma implantação pública, também devem ser considerados HTTPS, controle de acesso, supervisão do processo, logs e limites de consumo da API.
 
 ## Discussão
 
-A compatibilidade do NVIDIA NIM com o cliente OpenAI reduz o acoplamento da aplicação ao provedor. A integração exige apenas a troca da URL base, da credencial e do identificador do modelo.
+A compatibilidade do NVIDIA NIM com o Chatlas reduz o acoplamento da aplicação ao provedor. A integração exige apenas a troca da URL base, da credencial e do identificador do modelo.
 
 O histórico em memória é suficiente para a proposta acadêmica, mas possui limitações: ele não sobrevive ao encerramento da sessão, cresce a cada turno e pode elevar o número de tokens enviados. Em um produto real, seria importante limitar o contexto, resumir mensagens antigas ou usar armazenamento persistente.
 
 ## Lições aprendidas
 
-- Uma interface compatível com OpenAI facilita a experimentação entre provedores.
+- Uma interface compatível com OpenAI via Chatlas facilita a experimentação entre provedores.
 - Variáveis de ambiente ajudam a separar configuração, código e segredos.
 - O streaming melhora a percepção de velocidade da aplicação.
 - O histórico enviado ao modelo é o que mantém o contexto da conversa.
@@ -104,7 +106,7 @@ O histórico em memória é suficiente para a proposta acadêmica, mas possui li
 - limitar ou resumir históricos longos;
 - persistir conversas em um banco de dados;
 - adicionar autenticação, observabilidade e testes automatizados;
-- configurar HTTPS, proxy reverso e serviço `systemd` na VM;
+- configurar HTTPS e proxy reverso na VM;
 - empacotar a aplicação com Docker.
 
 ## Instruções de instalação e execução local
@@ -197,13 +199,31 @@ chmod 600 .env
 sudo ufw allow 8501/tcp
 ```
 
-7. Inicie a aplicação:
+7. Crie e habilite o serviço `systemd` `aula05-streamlit` para manter a aplicação em execução após logout ou reboot:
 
 ```bash
-source .venv/bin/activate
-./scripts/run.sh
+sudo tee /etc/systemd/system/aula05-streamlit.service > /dev/null <<'EOF'
+[Unit]
+Description=Chatbot NVIDIA Streamlit
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/aula05
+EnvironmentFile=/home/ubuntu/aula05/.env
+ExecStart=/home/ubuntu/aula05/.venv/bin/streamlit run /home/ubuntu/aula05/app.py --server.address 0.0.0.0 --server.port 8501 --server.headless true
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+EOF
+sudo systemctl daemon-reload
+sudo systemctl enable --now aula05-streamlit
+sudo systemctl status aula05-streamlit --no-pager
+journalctl -u aula05-streamlit --no-pager | tail -n 50
 ```
 
 8. Acesse `http://<IP_PUBLICO_DA_VM>:8501` e preencha os dados da implantação na tabela deste relatório.
-
-Para uso contínuo e seguro, recomenda-se posteriormente configurar um serviço `systemd` e um proxy reverso com HTTPS, evitando depender de uma sessão SSH aberta.

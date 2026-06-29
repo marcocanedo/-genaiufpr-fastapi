@@ -1,10 +1,8 @@
 import os
-from collections.abc import Iterator
 
-import streamlit as st
+from chatlas import Chat, ChatOpenAICompletions, Turn, UserTurn
 from dotenv import load_dotenv
-from openai import OpenAI, OpenAIError
-
+import streamlit as st
 
 DEFAULT_MODEL = "nvidia/llama-3.1-nemotron-nano-8b-v1"
 DEFAULT_BASE_URL = "https://integrate.api.nvidia.com/v1"
@@ -13,18 +11,14 @@ load_dotenv()
 
 st.set_page_config(page_title="Chatbot NVIDIA", page_icon="💬")
 st.title("Chatbot NVIDIA NIM")
-st.caption("Converse com um modelo open source disponibilizado pela NVIDIA.")
+st.caption("Converse com um modelo open source da NVIDIA com streaming via Chatlas.")
 
 api_key = os.getenv("NVIDIA_API_KEY")
 model = os.getenv("NVIDIA_MODEL", DEFAULT_MODEL)
 base_url = os.getenv("NVIDIA_BASE_URL", DEFAULT_BASE_URL)
 
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+if "turns" not in st.session_state:
+    st.session_state.turns = []
 
 if not api_key:
     st.error(
@@ -33,37 +27,47 @@ if not api_key:
     )
     st.stop()
 
-client = OpenAI(api_key=api_key, base_url=base_url)
 
-
-def generate_response() -> Iterator[str]:
-    stream = client.chat.completions.create(
+def build_chat() -> Chat:
+    chat = ChatOpenAICompletions(
+        api_key=api_key,
+        base_url=base_url,
         model=model,
-        messages=st.session_state.messages,
-        stream=True,
     )
+    if st.session_state.turns:
+        chat.set_turns(st.session_state.turns)
+    return chat
 
-    for chunk in stream:
-        if chunk.choices:
-            content = chunk.choices[0].delta.content
-            if content:
-                yield content
+
+def render_turn(turn: Turn) -> None:
+    if turn.role == "system" or not turn.text:
+        return
+
+    with st.chat_message(turn.role):
+        st.markdown(turn.text)
+
+
+chat = build_chat()
+
+for turn in chat.get_turns():
+    render_turn(turn)
 
 
 if prompt := st.chat_input("Digite sua mensagem"):
-    st.session_state.messages.append({"role": "user", "content": prompt})
-
     with st.chat_message("user"):
         st.markdown(prompt)
 
+    turns_before = list(chat.get_turns())
+
     with st.chat_message("assistant"):
         try:
-            response = st.write_stream(generate_response)
-            st.session_state.messages.append(
-                {"role": "assistant", "content": response}
-            )
-        except OpenAIError:
+            st.write_stream(chat.stream(prompt, content="text"))
+        except Exception:
             st.error(
-                "Não foi possível obter uma resposta da API da NVIDIA. "
-                "Verifique a chave, o modelo e a conexão e tente novamente."
+                "Não foi possível obter uma resposta da API da NVIDIA "
+                "via Chatlas. Verifique a chave, o modelo, a URL base e "
+                "a conexão e tente novamente."
             )
+            st.session_state.turns = [*turns_before, UserTurn(prompt)]
+        else:
+            st.session_state.turns = chat.get_turns()
