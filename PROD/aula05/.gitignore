@@ -1,0 +1,14 @@
+# Credenciais e ambientes virtuais
+.env
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Ferramentas e sistema operacional
+.pytest_cache/
+.mypy_cache/
+.DS_Store
