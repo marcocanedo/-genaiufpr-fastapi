@@ -6,15 +6,15 @@
 
 Preencha os campos abaixo antes da entrega ou publicação:
 
-| Item | Informação |
-| --- | --- |
-| Link público da aplicação | `http://168.138.227.189:8501` |
-| Repositório GitHub | `https://github.com/marcocanedo2001/ufpr` |
-| IP público da VM | `168.138.227.189` |
-| Sistema operacional | `Ubuntu 24.04.4 LTS` |
-| Shape da VM | `VM.Standard.A2.Flex` |
-| Quantidade de OCPUs | `8` |
-| Memória | `64 GB` |
+| Item                      | Informação                                |
+| ------------------------- | ----------------------------------------- |
+| Link público da aplicação | `http://168.138.227.189:8501`             |
+| Repositório GitHub        | `https://github.com/marcocanedo2001/ufpr` |
+| IP público da VM          | `168.138.227.189`                         |
+| Sistema operacional       | `Ubuntu 24.04.4 LTS`                      |
+| Shape da VM               | `VM.Standard.A2.Flex`                     |
+| Quantidade de OCPUs       | `8`                                       |
+| Memória                   | `64 GB`                                   |
 
 ## Introdução
 
@@ -24,13 +24,15 @@ O projeto demonstra, de forma simples e reproduzível, o fluxo completo entre a 
 
 ## Objetivo da atividade
 
-O objetivo foi desenvolver e preparar para implantação um produto mínimo de IA generativa capaz de:
+O objetivo desta atividade foi desenvolver um produto mínimo de IA generativa preparado para execução local e implantação. A proposta consistiu em construir uma experiência conversacional simples, compatível com os requisitos do exercício e baseada em uma arquitetura leve e reproduzível.
+
+Mais especificamente, a aplicação foi construída para:
 
 - receber mensagens em uma interface web;
-- preservar o contexto durante a sessão;
+- preservar o contexto da conversa durante a sessão;
 - consumir a API NVIDIA NIM por meio do Chatlas em uma interface compatível com OpenAI;
 - exibir as respostas do modelo em streaming;
-- manter credenciais fora do código-fonte.
+- manter credenciais e parâmetros de configuração fora do código-fonte.
 
 ## Visão geral da solução
 
@@ -60,29 +62,45 @@ A inferência não ocorre na VM. A máquina hospeda apenas a interface e o clien
 
 ## Modelo escolhido
 
-O modelo padrão é `nvidia/llama-3.1-nemotron-nano-8b-v1`. Ele pertence à família Nemotron da NVIDIA e foi escolhido por oferecer uma alternativa open source adequada à experimentação com aplicações conversacionais.
+O modelo adotado na aplicação é `nvidia/nemotron-3-nano-30b-a3b`. Inicialmente, foram realizados testes com `nvidia/llama-3.1-nemotron-nano-8b-v1`, mas o tempo de resposta observado não foi satisfatório para a experiência conversacional desejada. Diante disso, o projeto passou a utilizar o modelo atual.
+
+A escolha também se justifica por suas características técnicas. O `nvidia/nemotron-3-nano-30b-a3b` utiliza arquitetura Mixture of Experts (MoE), na qual o modelo possui um grande conjunto total de parâmetros, mas ativa apenas parte deles a cada etapa da inferência. Na prática, isso contribui para maior eficiência computacional e ajuda a oferecer um melhor equilíbrio entre capacidade do modelo e tempo de resposta.
+
+Além disso, o modelo é adequado para tarefas conversacionais, seguimento de instruções e geração de conteúdo em linguagem natural, o que o torna compatível com a proposta da aplicação desenvolvida nesta atividade.
 
 O nome do modelo é configurável pela variável `NVIDIA_MODEL`, o que permite testar outro modelo compatível sem alterar o código.
 
 ## Desenvolvimento
 
-A interface usa `st.chat_message` para apresentar cada turno e `st.chat_input` para receber novas mensagens. O histórico fica em `st.session_state`, permanecendo disponível enquanto a sessão do navegador estiver ativa. A implementação cria um `ChatOpenAICompletions`, reaproveita `get_turns()` e `set_turns()` e faz streaming da resposta diretamente para a interface.
+### Arquitetura da aplicação
 
-As configurações são lidas das seguintes variáveis de ambiente:
+A aplicação foi desenvolvida como um chatbot web em Streamlit, com uma arquitetura simples baseada em interface, estado de sessão e consumo de API externa. A interface usa `st.chat_message` para apresentar os turnos da conversa e `st.chat_input` para receber novas mensagens. O histórico fica armazenado em `st.session_state`, o que preserva o contexto enquanto a sessão do navegador permanece ativa. Para a comunicação com o modelo, a aplicação cria um cliente `ChatOpenAICompletions` apontando para o endpoint compatível com OpenAI da NVIDIA e exibe as respostas em streaming diretamente na interface.
 
-- `NVIDIA_API_KEY`: credencial de acesso obrigatória;
-- `NVIDIA_MODEL`: modelo usado na geração;
-- `NVIDIA_BASE_URL`: endereço do endpoint compatível com OpenAI.
+### Bibliotecas utilizadas
 
-O arquivo `.env` não é versionado. O repositório contém apenas `.env.example`, que documenta as variáveis necessárias sem incluir dados secretos. Em caso de falha na API, a interface mostra uma mensagem amigável e não expõe a chave ou detalhes sensíveis.
+As principais bibliotecas utilizadas no projeto são:
+
+- `streamlit`, responsável pela interface web interativa;
+- `chatlas`, utilizado como camada de integração com a API da NVIDIA e gerenciamento da conversa;
+- `python-dotenv`, empregado para carregar variáveis de ambiente a partir do arquivo `.env`.
+
+### Estratégia de gerenciamento de credenciais
+
+As credenciais e parâmetros de configuração são mantidos fora do código-fonte por meio de variáveis de ambiente. A aplicação lê as variáveis `NVIDIA_API_KEY`, `NVIDIA_MODEL` e `NVIDIA_BASE_URL`, permitindo alterar credenciais, modelo e endpoint sem modificar a implementação. O arquivo `.env` não é versionado, enquanto o repositório mantém apenas o `.env.example` com a estrutura esperada das variáveis. Em caso de falha de configuração ou de comunicação com a API, a interface apresenta mensagens de erro amigáveis sem expor informações sensíveis.
 
 ## Implantação
 
-A aplicação pode ser executada em qualquer ambiente com Python e acesso ao endpoint da NVIDIA. Para esta atividade, a opção sugerida é uma VM Oracle Cloud com Linux. O script `scripts/run.sh` inicia o Streamlit aceitando conexões externas no endereço `0.0.0.0`.
+### Processo de publicação na Oracle Cloud
 
-Para manter a aplicação disponível após logout ou reinicialização da máquina, a VM usada neste projeto foi configurada com um serviço `systemd` dedicado. Ele aponta para o ambiente virtual do projeto, carrega o arquivo `.env` e reinicia automaticamente em caso de falha.
+A publicação da aplicação foi realizada em uma máquina virtual Linux na Oracle Cloud Infrastructure (OCI). Após a criação da instância, foram instalados Python, `venv`, `pip` e as dependências do projeto. Em seguida, o repositório foi copiado para a VM, o ambiente virtual foi configurado e as variáveis de ambiente necessárias foram definidas no arquivo `.env`.
 
-Em uma implantação pública, também devem ser considerados HTTPS, controle de acesso, supervisão do processo, logs e limites de consumo da API.
+Para disponibilizar a interface externamente, a aplicação foi executada com Streamlit escutando no endereço `0.0.0.0`, utilizando o script `scripts/run.sh`. Também foi necessário liberar a porta `8501` nas regras de rede da infraestrutura e, quando aplicável, no firewall do sistema operacional. Para manter o serviço ativo após logout ou reinicialização, a VM foi configurada com um serviço `systemd`, responsável por iniciar automaticamente a aplicação e reiniciá-la em caso de falha.
+
+### Principais desafios encontrados
+
+Os principais desafios estiveram relacionados à operação da aplicação em ambiente real. Um dos pontos observados foi o tempo de resposta do modelo inicialmente testado, o que motivou a adoção de um modelo mais adequado para a experiência conversacional desejada. Também foi importante garantir o carregamento correto das credenciais e parâmetros de configuração por meio do arquivo `.env`, evitando falhas de autenticação ou de conexão com a API.
+
+Outro desafio relevante foi assegurar a disponibilidade contínua da interface após a publicação. Como o Streamlit é executado como um processo de aplicação, foi necessário configurar a inicialização automática do serviço na VM e validar a liberação de portas de rede para acesso externo. Em uma implantação pública mais robusta, ainda devem ser considerados HTTPS, controle de acesso, supervisão do processo, logs e limites de consumo da API.
 
 ## Discussão
 
@@ -226,4 +244,5 @@ sudo systemctl status aula05-streamlit --no-pager
 journalctl -u aula05-streamlit --no-pager | tail -n 50
 ```
 
-8. Acesse `http://<IP_PUBLICO_DA_VM>:8501` e preencha os dados da implantação na tabela deste relatório.
+
+
