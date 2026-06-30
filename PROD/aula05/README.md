@@ -159,7 +159,7 @@ Edite `.env` e informe sua chave, sem usar aspas:
 
 ```dotenv
 NVIDIA_API_KEY=sua_chave_aqui
-NVIDIA_MODEL=nvidia/llama-3.1-nemotron-nano-8b-v1
+NVIDIA_MODEL=nvidia/nemotron-3-nano-30b-a3b
 NVIDIA_BASE_URL=https://integrate.api.nvidia.com/v1
 ```
 
@@ -243,6 +243,5 @@ sudo systemctl enable --now aula05-streamlit
 sudo systemctl status aula05-streamlit --no-pager
 journalctl -u aula05-streamlit --no-pager | tail -n 50
 ```
-
 
 

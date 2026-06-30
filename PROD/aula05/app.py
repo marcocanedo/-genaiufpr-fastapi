@@ -4,7 +4,7 @@ from chatlas import Chat, ChatOpenAICompletions, Turn, UserTurn
 from dotenv import load_dotenv
 import streamlit as st
 
-DEFAULT_MODEL = "nvidia/llama-3.1-nemotron-nano-8b-v1"
+DEFAULT_MODEL = "nvidia/nemotron-3-nano-30b-a3b"
 DEFAULT_BASE_URL = "https://integrate.api.nvidia.com/v1"
 
 load_dotenv()
