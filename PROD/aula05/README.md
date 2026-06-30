@@ -6,15 +6,15 @@
 
 Preencha os campos abaixo antes da entrega ou publicação:
 
-| Item                      | Informação                                |
-| ------------------------- | ----------------------------------------- |
-| Link público da aplicação | `http://168.138.227.189:8501`             |
-| Repositório GitHub        | `https://github.com/marcocanedo2001/ufpr` |
-| IP público da VM          | `168.138.227.189`                         |
-| Sistema operacional       | `Ubuntu 24.04.4 LTS`                      |
-| Shape da VM               | `VM.Standard.A2.Flex`                     |
-| Quantidade de OCPUs       | `8`                                       |
-| Memória                   | `64 GB`                                   |
+| Item                      | Informação                    |
+| ------------------------- | ----------------------------- |
+| Link público da aplicação | `http://168.138.227.189:8501` |
+| Repositório GitHub        | `https://github.com/marcocanedo2001/ufpr/tree/95360aa26f1b0b7f9faa2c6236fa6b129ac7ba11/PROD/aula05`                              |
+| IP público da VM          | `168.138.227.189`             |
+| Sistema operacional       | `Ubuntu 24.04.4 LTS`          |
+| Shape da VM               | `VM.Standard.A2.Flex`         |
+| Quantidade de OCPUs       | `8`                           |
+| Memória                   | `64 GB`                       |
 
 ## Introdução
 
@@ -243,5 +243,3 @@ sudo systemctl enable --now aula05-streamlit
 sudo systemctl status aula05-streamlit --no-pager
 journalctl -u aula05-streamlit --no-pager | tail -n 50
 ```
-
-
