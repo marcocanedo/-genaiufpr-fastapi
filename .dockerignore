@@ -1,11 +1,11 @@
+.git
+.gitignore
 .venv
-venv
 __pycache__
 *.pyc
 *.pyo
-*.pyd
-.pytest_cache
-.git
-.gitignore
-Dockerfile
 *.tar
+*.tar.gz
+temperaturas-curitiba.svg
+README.md
+environment.yml
