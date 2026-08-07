@@ -112,5 +112,5 @@ No servidor Oracle foram aplicados os ajustes:
 - `Dockerfile`
 - `requirements.txt`
 - `.dockerignore`
-- `. -genaiufpr-fastapi/clima_api.py`
+- `-genaiufpr-fastapi/clima_api.py`
 - `clima-api.tar` (artefato local, não versionado)
