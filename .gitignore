@@ -21,6 +21,9 @@ ENV/
 # Docker / build da imagem
 clima-api.tar
 clima-api-optimized.tar
+clima-api-v1.tar
+clima-api-v1.tar.gz
+temperaturas-curitiba.svg
 
 # Arquivos temporários / locais
 active:unknown
