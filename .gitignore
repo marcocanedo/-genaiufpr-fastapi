@@ -1,28 +1,36 @@
-_git_backups/
-.vscode/
-**/.vscode/
-
-# Local environment files
-.env
-**/.env
-
-# Python cache artifacts
+# Python
 __pycache__/
-**/__pycache__/
 *.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.coverage
+htmlcov/
 
-# Local Python virtual environment
-aprendizado_de_maquina/aula01_introducao_aprendizado_maquina/.venv/
+# Ambientes virtuais
+.venv/
+venv/
+env/
+ENV/
 
-# Large local datasets
-PYAI/aula07/crag_task_1_and_2_dev_v4.jsonl.bz2
+# Docker / build da imagem
+clima-api.tar
+clima-api-optimized.tar
 
-# Local lesson data artifacts
-DSLLM/aula02/lessons/*/data/
-PYAI/aula07/data/
-PYAI/aula07/*.csv
-PYAI/aula07/*.xls
-PYAI/aula07/*.xlsx
-PYAI/aula07/*.jsonl
-PYAI/aula07/*.jsonl.*
-PYAI/aula07/*.parquet
+# Arquivos temporários / locais
+active:unknown
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*~
+
+# Sistemas de arquivos
+.DS_Store
+Thumbs.db
