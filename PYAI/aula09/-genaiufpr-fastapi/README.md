@@ -5,7 +5,7 @@ Este diretório contém uma API simples em FastAPI para consultar temperatura at
 ## O que foi implementado
 
 ### 1) Ajustes de código da API
-- Arquivo: `-genaiufpr-fastapi/clima_api.py`
+- Arquivo: `clima_api.py`
 - Melhorias feitas:
   - Adição de timeout nas chamadas externas para as APIs da Open-Meteo (`requests.get(..., timeout=3.0)`).
   - Implementação de cache em memória para geocodificação (`@lru_cache(maxsize=128)`), reduzindo chamadas repetidas.
