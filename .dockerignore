@@ -1,9 +1,11 @@
-.git
-.gitignore
 .venv
+venv
 __pycache__
 *.pyc
-*.tar
+*.pyo
+*.pyd
+.pytest_cache
+.git
+.gitignore
 Dockerfile
-README.md
-environment.yml
+*.tar

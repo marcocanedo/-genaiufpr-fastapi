@@ -125,7 +125,13 @@ def _as_float(valor: object, contexto: str) -> float:
         return valor
 
     if isinstance(valor, str):
-        return float(valor)
+        try:
+            return float(valor)
+        except (TypeError, ValueError) as exc:
+            raise HTTPException(
+                status_code=502,
+                detail=f"O campo {contexto} possui um valor inválido.",
+            ) from exc
 
     if isinstance(valor, dict) or isinstance(valor, list):
         raise HTTPException(
