@@ -1,7 +1,11 @@
-FROM continuumio/miniconda3 
+FROM python:3.13-slim
+
 WORKDIR /app
-COPY environment.yml .
-RUN conda env create -f environment.yml
-COPY . .
-WORKDIR /app/-genaiufpr-fastapi
-CMD ["conda", "run", "--no-capture-output", "-n", "clima_api", "uvicorn", "--host", "0.0.0.0", "--port", "8000", "clima_api:app"]
+
+RUN pip install --no-cache-dir --upgrade pip
+COPY requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+COPY -genaiufpr-fastapi /app
+
+CMD ["uvicorn", "clima_api:app", "--host", "0.0.0.0", "--port", "8000"]
