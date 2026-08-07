@@ -1,9 +1,0 @@
-.git
-.gitignore
-.venv
-__pycache__
-*.pyc
-*.tar
-Dockerfile
-README.md
-environment.yml

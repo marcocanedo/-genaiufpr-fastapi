@@ -1,8 +1,0 @@
-aula04/
-.venv/
-__pycache__/
-*.py[cod]
-
-.env
-.Rhistory
-*.out
